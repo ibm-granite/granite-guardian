@@ -13,10 +13,10 @@ They outperform these models on standard benchmarks.
   - 🤗 [Granite-Guardian-3.0-8B](https://huggingface.co/ibm-granite/granite-guardian-3.0-8b)
   - 🤗 [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)
 - **Granite Gaurdian Recpies:** <!-- TODO : missing links-->
-  - 📕 [Quick Start Guide]() (walk through [video](https://ibm.ent.box.com/v/granite-guardian-quick-start) ▶️ ) 
-  - 📕 [Detailed Guide]()
-  - 📕 [Usage Governance Workflow]()
-  - 📕 [Hate, Abuse, and Profanity (HAP) Detection]()
+  - 📕 [Quick Start Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Quick_Start.ipynb) (walk through [video](https://ibm.ent.box.com/v/granite-guardian-quick-start) ▶️ ) 
+  - 📕 [Detailed Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Detailed_Guide.ipynb)
+  - 📕 [Usage Governance Workflow](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Usage_Governance_Workflow.ipynb)
+  - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/HAP.ipynb)
 - **Demos:** 
   - ▶️ [Feature Demo](https://ibm.box.com/s/a9522itaho5bo08y8w8hl9ljra0ktsnw) 
 - **Additional Resources:**
