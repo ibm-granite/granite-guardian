@@ -18,7 +18,7 @@ They outperform these models on standard benchmarks.
   - 📕 [Usage Governance Workflow](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Usage_Governance_Workflow.ipynb)
   - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/HAP.ipynb)
 - **Demos:** 
-  - ▶️ [Feature Demo](https://ibm.box.com/s/a9522itaho5bo08y8w8hl9ljra0ktsnw) 
+  - ▶️ [Feature Demo](https://ibm.box.com/v/granite-guardian-demo) 
 - **Additional Resources:**
   - 🤗 Datasets - [SocialStigmaQA](), [SocialStigmaQA-JA](), [AttaQ](), [ProvoQ](), [WikiContradict]()
 - **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/)
