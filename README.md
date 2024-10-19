@@ -11,12 +11,13 @@ They outperform these models on standard benchmarks.
 - **Model Cards:**
   - 🤗 [Granite-Guardian-3.0-2B](https://huggingface.co/ibm-granite/granite-guardian-3.0-2b)
   - 🤗 [Granite-Guardian-3.0-8B](https://huggingface.co/ibm-granite/granite-guardian-3.0-8b)
+  - 🤗 [Granite-Guardian-HAP-125M](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)
   - 🤗 [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)
 - **Granite Gaurdian Recpies:** <!-- TODO : missing links-->
-  - 📕 [Quick Start Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Quick_Start.ipynb) (walk through [video](https://ibm.ent.box.com/v/granite-guardian-quick-start) ▶️ ) 
-  - 📕 [Detailed Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Detailed_Guide.ipynb)
-  - 📕 [Usage Governance Workflow](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/Granite_Guardian_Usage_Governance_Workflow.ipynb)
-  - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/tree/main/recipes/Granite_Guardian/HAP.ipynb)
+  - 📕 [Quick Start Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Quick_Start.ipynb) (walk through [video](https://ibm.ent.box.com/v/granite-guardian-quick-start) ▶️ )
+  - 📕 [Detailed Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Detailed_Guide.ipynb)
+  - 📕 [Usage Governance Workflow](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Usage_Governance_Workflow.ipynb)
+  - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)
 - **Demos:** 
   - ▶️ [Feature Demo](https://ibm.box.com/v/granite-guardian-demo) 
 - **Additional Resources:**
@@ -45,7 +46,7 @@ Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-g
 
 ### Harm Benchmarks
 Granite Guardian 3.0 models outperforms competitive models across the standard benchmarks of [Aeigis AI Content Safety Dataset](https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-1.0), [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat), [HarmBench](https://github.com/centerforaisafety/HarmBench/tree/main), [SimpleSafetyTests](https://huggingface.co/datasets/Bertievidgen/SimpleSafetyTests), [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails), [OpenAI Moderation data](https://github.com/openai/moderation-api-release/tree/main), [SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) and [xstest-response](https://huggingface.co/datasets/allenai/xstest-response). With the risk definition set to `jailbreak`, the model gives a recall of 1.0 for the jailbreak prompts within ToxicChat dataset.
-
+Following plot compares F1 scores for different models across the benchmark dataset.
 ![harm_benchmark_8b.png](figures/harm_benchmark_8b.png)
 
 ![harm_benchmark_2B.png](figures/harm_benchmark_2B.png)
