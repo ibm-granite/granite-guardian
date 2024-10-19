@@ -3,14 +3,14 @@
 The Granite Guardian models are a collection of models designed to detect risks in prompts and responses.
 Trained on instruction fine-tuned Granite languages models, these models can help with risk detection along many key dimensions catalogued in the [IBM Risk Atlas](https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas).
 These models are trained on unique data comprising human annotations from socioeconomically diverse people and synthetic data informed by internal red-teaming. 
-They outperform these models on standard benchmarks.
+They outperform similar models on standard benchmarks.
 
 
 ## Quick Links
 
-- **Model Cards:**
-  - 🤗 [Granite-Guardian-3.0-2B](https://huggingface.co/ibm-granite/granite-guardian-3.0-2b)
+- **Granite Guardian Collection:**
   - 🤗 [Granite-Guardian-3.0-8B](https://huggingface.co/ibm-granite/granite-guardian-3.0-8b)
+  - 🤗 [Granite-Guardian-3.0-2B](https://huggingface.co/ibm-granite/granite-guardian-3.0-2b)
   - 🤗 [Granite-Guardian-HAP-125M](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)
   - 🤗 [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)
 - **Granite Gaurdian Recpies:** <!-- TODO : missing links-->
@@ -22,7 +22,7 @@ They outperform these models on standard benchmarks.
   - ▶️ [Feature Demo](https://ibm.box.com/v/granite-guardian-demo) 
 - **Additional Resources:**
   - 🤗 Datasets - [SocialStigmaQA](), [SocialStigmaQA-JA](), [AttaQ](), [ProvoQ](), [WikiContradict]()
-- **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/)
+- **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/models/guardian/)
 - **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 
@@ -37,7 +37,7 @@ Granite Guardian is useful for risk detection use-cases which are applicable acr
 
 - Granite Guardian models must <ins>only</ins> be used strictly for the prescribed scoring mode, which generates yes/no outputs based on the specified template. Any deviation from this intended use may lead to unexpected, potentially unsafe, or harmful outputs. The model may also be prone to such behaviour via adversarial attacks. 
 - The model is targeted for risk definitions of general harm, social bias, profanity, violence, sexual content, unethical behavior, jailbreaking, or groundedness/relevance for retrieval-augmented generation. 
-It is also applicable for use for custom risk definitions but these require testing.
+It is also applicable for use with custom risk definitions, but these require testing.
 - The model is only trained and tested on English data.
 - Given their parameter size, the main Granite Guardian models are intended for use cases that require moderate cost, latency, and throughput such as model risk assessment, model observability and monitoring, and spot-checking inputs and outputs.
 Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m) for recognizing hate, abuse and profanity can be used for guardrailing with stricter cost, latency, or throughput requirements.
