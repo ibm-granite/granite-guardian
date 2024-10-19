@@ -47,6 +47,7 @@ Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-g
 ### Harm Benchmarks
 Granite Guardian 3.0 models outperforms competitive models across the standard benchmarks of [Aeigis AI Content Safety Dataset](https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-1.0), [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat), [HarmBench](https://github.com/centerforaisafety/HarmBench/tree/main), [SimpleSafetyTests](https://huggingface.co/datasets/Bertievidgen/SimpleSafetyTests), [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails), [OpenAI Moderation data](https://github.com/openai/moderation-api-release/tree/main), [SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) and [xstest-response](https://huggingface.co/datasets/allenai/xstest-response). With the risk definition set to `jailbreak`, the model gives a recall of 1.0 for the jailbreak prompts within ToxicChat dataset.
 Following plot compares F1 scores for different models across the benchmark dataset.
+
 ![harm_benchmark_8b.png](figures/harm_benchmark_8b.svg)
 
 ![harm_benchmark_2B.png](figures/harm_benchmark_2b.svg)
