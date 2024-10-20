@@ -1,7 +1,7 @@
 # Granite Guardian
 
 The Granite Guardian models are a collection of models designed to detect risks in prompts and responses.
-Trained on instruction fine-tuned Granite languages models, these models can help with risk detection along many key dimensions catalogued in the [IBM Risk Atlas](https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas).
+Trained on instruction fine-tuned Granite languages models, these models can help with risk detection along many key dimensions catalogued in the [IBM AI Risk Atlas](https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas).
 These models are trained on unique data comprising human annotations from socioeconomically diverse people and synthetic data informed by internal red-teaming. 
 They outperform similar models on standard benchmarks.
 
@@ -45,8 +45,8 @@ Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-g
 ## Evaluations
 
 ### Harm Benchmarks
-Granite Guardian 3.0 models outperforms competitive models across the standard benchmarks of [Aeigis AI Content Safety Dataset](https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-1.0), [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat), [HarmBench](https://github.com/centerforaisafety/HarmBench/tree/main), [SimpleSafetyTests](https://huggingface.co/datasets/Bertievidgen/SimpleSafetyTests), [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails), [OpenAI Moderation data](https://github.com/openai/moderation-api-release/tree/main), [SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) and [xstest-response](https://huggingface.co/datasets/allenai/xstest-response). With the risk definition set to `jailbreak`, the model gives a recall of 1.0 for the jailbreak prompts within ToxicChat dataset.
-Following plot compares F1 scores for different models across the benchmark dataset.
+Granite Guardian 3.0 models outperforms competitive models across the standard benchmarks of [Aeigis AI Content Safety Dataset](https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-1.0), [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat), [HarmBench](https://github.com/centerforaisafety/HarmBench/tree/main), [SimpleSafetyTests](https://huggingface.co/datasets/Bertievidgen/SimpleSafetyTests), [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails), [OpenAI Moderation data](https://github.com/openai/moderation-api-release/tree/main), [SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) and [xstest-response](https://huggingface.co/datasets/allenai/xstest-response). With the risk definition set to `jailbreak`, both models achieve a recall of 1.0 for the jailbreak prompts within ToxicChat dataset.
+Following plot compares F1 scores for different models across the benchmark datasets.
 
 ![harm_benchmark_8b.png](figures/harm_benchmark_8b.svg)
 
