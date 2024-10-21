@@ -59,7 +59,7 @@ For risks in RAG use cases, the Granite-Guardian-3.0-8B model outperforms open-s
 
 
 ## Training Data
-Granite Guardian 3.0 models are trained on a combination of human annotated and synthetic dataSamples from [hh-rlhf](https://huggingface.co/datasets/Anthropic/hh-rlhf) dataset were used to obtain responses from Granite and Mixtral models.
+Granite Guardian 3.0 models are trained on a combination of human annotated and synthetic data. Samples from [hh-rlhf](https://huggingface.co/datasets/Anthropic/hh-rlhf) dataset were used to obtain responses from Granite and Mixtral models.
 These prompt-response pairs were annotated for different risk dimensions by a group of people at DataForce.
 DataForce prioritizes the well-being of its data contributors by ensuring they are paid fairly and receive livable wages for all projects.
 Additional synthetic data was used to supplement the training set to improve performance for hallucination and jailbreak related risks.
