@@ -14,16 +14,16 @@ They outperform similar models on standard benchmarks.
   - 🤗 [Granite-Guardian-HAP-125M](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)
   - 🤗 [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)
 - **Granite Guardian Recipes:**
-  - 📕 [Quick Start Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Quick_Start.ipynb) (walkthrough [video](https://ibm.ent.box.com/v/granite-guardian-quick-start) :arrow_forward:)
+  - 📕 [Quick Start Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Quick_Start.ipynb) (walkthrough [video](https://ibm.biz/gg_recipe) :arrow_forward:)
   - 📕 [Detailed Guide](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Detailed_Guide.ipynb)
   - 📕 [Usage Governance Workflow](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/Granite_Guardian_Usage_Governance_Workflow.ipynb)
   - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)
 - **Demos:** 
-  - ▶️ [Feature Demo](https://ibm.box.com/v/granite-guardian-demo) 
+  - ▶️ [Feature Demo](https://ibm.biz/gg_demo) 
 - **Additional Resources:**
   - 🤗 Datasets - [SocialStigmaQA](https://huggingface.co/datasets/ibm/SocialStigmaQA), [SocialStigmaQA-JA](https://huggingface.co/datasets/ibm/SocialStigmaQA-JA), [AttaQ](https://huggingface.co/datasets/ibm/AttaQ), [ProvoQ](https://huggingface.co/datasets/ibm/ProvoQ), [WikiContradict](https://huggingface.co/datasets/ibm/Wikipedia_contradict_benchmark)
 - **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/models/guardian/)
-- **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+- **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 
 ## Usage
