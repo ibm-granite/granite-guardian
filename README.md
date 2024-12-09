@@ -8,6 +8,8 @@ They outperform similar models on standard benchmarks.
 
 ## Quick Links
 
+- :books: <a href="https://github.com/ibm-granite/granite-guardian/blob/technical_report.pdf">**Technical Report**</a>
+
 - **Granite Guardian Collection:**
   - 🤗 [Granite-Guardian-3.0-8B](https://huggingface.co/ibm-granite/granite-guardian-3.0-8b)
   - 🤗 [Granite-Guardian-3.0-2B](https://huggingface.co/ibm-granite/granite-guardian-3.0-2b)
