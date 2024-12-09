@@ -1,10 +1,13 @@
 # Granite Guardian
 
+👉 (Dec-2024) Added :books: <a href="https://github.com/ibm-granite/granite-guardian/blob/technical_report.pdf">**technical report**</a> for Granite-Guardian-3.0
+
+## Overview
+
 The Granite Guardian models are a collection of models designed to detect risks in prompts and responses.
 Trained on instruction fine-tuned Granite languages models, these models can help with risk detection along many key dimensions catalogued in the [IBM AI Risk Atlas](https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas).
 These models are trained on unique data comprising human annotations from socioeconomically diverse people and synthetic data informed by internal red-teaming. 
 They outperform similar models on standard benchmarks.
-
 
 ## Quick Links
 
