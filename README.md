@@ -91,3 +91,17 @@ Additional synthetic data was used to supplement the training set to improve per
 | 1969               | 55                | Female | Bachelor                                        | Latin American or Hispanic     | Florida         |
 | 1993               | 31                | Female | Bachelor of Business Administration             | White                         | Florida         |
 | 1985               | 39                | Female | Master of Music                                 | White                         | California      |
+
+
+### Citation
+```latex
+@misc{padhi2024graniteguardian,
+      title={Granite Guardian}, 
+      author={Inkit Padhi and Manish Nagireddy and Giandomenico Cornacchia and Subhajit Chaudhury and Tejaswini Pedapati and Pierre Dognin and Keerthiram Murugesan and Erik Miehling and Martín Santillán Cooper and Kieran Fraser and Giulio Zizzo and Muhammad Zaid Hameed and Mark Purcell and Michael Desmond and Qian Pan and Inge Vejsbjerg and Elizabeth M. Daly and Michael Hind and Werner Geyer and Ambrish Rawat and Kush R. Varshney and Prasanna Sattigeri},
+      year={2024},
+      eprint={2412.07724},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2412.07724}, 
+}
+```
