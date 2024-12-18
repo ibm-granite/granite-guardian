@@ -1,6 +1,7 @@
 # Granite Guardian
 
-👉 (Dec-2024) Granite-Guardian-3.1 has landed! Updated 
+👉 (Dec-2024) Granite-Guardian-3.1 has landed! Updated notebooks, documentation, and results!
+
 👉 (Dec-2024) Added :books: <a href="https://github.com/ibm-granite/granite-guardian/blob/main/technical_report.pdf">**technical report**</a> for Granite-Guardian-3.0
 
 ## Overview
