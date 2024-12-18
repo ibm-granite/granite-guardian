@@ -2,7 +2,7 @@
 
 👉 (Dec-2024) Granite-Guardian-3.1 has landed! Updated notebooks, documentation, and results!
 
-👉 (Dec-2024) Added :books: <a href="https://github.com/ibm-granite/granite-guardian/blob/main/technical_report.pdf">**technical report**</a> for Granite-Guardian-3.0
+👉 (Dec-2024) Added :books: <a href="https://arxiv.org/abs/2412.07724">**technical report**</a> for Granite-Guardian-3.0
 
 ## Overview
 
@@ -13,7 +13,7 @@ They outperform similar models on standard benchmarks.
 
 ## Quick Links
 
-- :books: <a href="https://github.com/ibm-granite/granite-guardian/blob/main/technical_report.pdf">**Technical Report**</a>
+- :books: <a href="https://arxiv.org/abs/2412.07724">**Technical Report**</a>
 
 - **Granite Guardian Collection:**
   - 🤗 [Granite-Guardian-3.1-8B](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b)
@@ -29,7 +29,6 @@ They outperform similar models on standard benchmarks.
   - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian)
   - ▶️ [Walkthrough with GG-3.0](https://ibm.biz/gg_demo) 
 - **Additional Resources:**
-  - **Paper:** [Granite Guardian](https://arxiv.org/abs/2412.07724)
   - 🤗 Datasets - [SocialStigmaQA](https://huggingface.co/datasets/ibm/SocialStigmaQA), [SocialStigmaQA-JA](https://huggingface.co/datasets/ibm/SocialStigmaQA-JA), [AttaQ](https://huggingface.co/datasets/ibm/AttaQ), [ProvoQ](https://huggingface.co/datasets/ibm/ProvoQ), [WikiContradict](https://huggingface.co/datasets/ibm/Wikipedia_contradict_benchmark)
 - **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/models/guardian/)
 - **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
