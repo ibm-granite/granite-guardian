@@ -25,8 +25,9 @@ They outperform similar models on standard benchmarks.
   - 📕 [Detailed Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.1/detailed_guide_vllm.ipynb) explores different risk dimensions in depth and shows how to assess custom risk definitions with Granite Guardian.
   - 📕 [Usage Governance Workflow](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.1/usage_governance_workflow_vllm.ipynb) outlines steps for users investigating AI risks within a use-case, incentivizing them to explore risks from the IBM AI Risk Atlas using Granite Guardian.
   - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)
-- **Demos:** 
-  - ▶️ [Feature Demo](https://ibm.biz/gg_demo) 
+- **Demos:**
+  - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian)
+  - ▶️ [GG-3.0 Feature Demo](https://ibm.biz/gg_demo) 
 - **Additional Resources:**
   - **Paper:** [Granite Guardian](https://arxiv.org/abs/2412.07724)
   - 🤗 Datasets - [SocialStigmaQA](https://huggingface.co/datasets/ibm/SocialStigmaQA), [SocialStigmaQA-JA](https://huggingface.co/datasets/ibm/SocialStigmaQA-JA), [AttaQ](https://huggingface.co/datasets/ibm/AttaQ), [ProvoQ](https://huggingface.co/datasets/ibm/ProvoQ), [WikiContradict](https://huggingface.co/datasets/ibm/Wikipedia_contradict_benchmark)
