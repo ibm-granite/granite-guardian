@@ -56,19 +56,21 @@ Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-g
 ### Harm Benchmarks
 Following the general harm definition, Granite-Guardian-3.1-2B is evaluated across the standard benchmarks of [Aeigis AI Content Safety Dataset](https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-1.0), [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat), [HarmBench](https://github.com/centerforaisafety/HarmBench/tree/main), [SimpleSafetyTests](https://huggingface.co/datasets/Bertievidgen/SimpleSafetyTests), [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails), [OpenAI Moderation data](https://github.com/openai/moderation-api-release/tree/main), [SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) and [xstest-response](https://huggingface.co/datasets/allenai/xstest-response). With the risk definition set to `jailbreak`, the model gives a recall of 0.90 for the jailbreak prompts within ToxicChat dataset.
 
-Following plot compares F1 scores for different models across the benchmark datasets.
+Following plot compares F1 scores for different models across the benchmark datasets. IBM Granite-Guardian-3.1-8B outperforms 3.0 as well as Llama-Guard-8B with +7 points increase in average F1-score on risk detection public benchmarks
 
 ![harm_benchmark_3.1.png](figures/harm_benchmark_3.1.png)
  
 ### RAG Hallucination Benchmarks 
-For risks in RAG use cases, the model is evaluated on [TRUE](https://github.com/google-research/true) benchmarks.
+For risks in RAG use cases, the model is evaluated on [TRUE](https://github.com/google-research/true) benchmarks. IBM Granite-Guardian-3.1-8B is competitive with a SOTA specialized model – Bespoke-Minicheck-7B
 
 ![rag_benchmark_3.1.png](figures/rag_benchmark_3.1.png)
 
 ### Function Calling Hallucination Benchmarks 
 The model performance is evaluated on the DeepSeek generated samples from [APIGen](https://huggingface.co/datasets/Salesforce/xlam-function-calling-60k) dataset, the [ToolAce](https://huggingface.co/datasets/Team-ACE/ToolACE) dataset, and different splits of the [BFCL v2](https://gorilla.cs.berkeley.edu/blogs/12_bfcl_v2_live.html) datasets. For DeepSeek and ToolAce dataset, synthetic errors are generated from `mistralai/Mixtral-8x22B-v0.1` teacher model. For the others, the errors are generated from existing function calling models on corresponding categories of the BFCL v2 dataset.
 
-![fc_benchmark_3.1.png](figures/fc_benchmark_3.1.png)
+| Metric  | multiple | simple | parallel | parallel_multiple | javascript | java | deepseek | toolace|
+|---------|------|-------|-----------|------------|----------|----------|------|------|
+| **AUC** | 0.68 | 0.71  | 0.72      | 0.70       | 0.65     | 0.74     | 0.82 | 0.76 |
 
 
 ## Training Data
