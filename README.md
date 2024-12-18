@@ -27,7 +27,7 @@ They outperform similar models on standard benchmarks.
   - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)
 - **Demos:**
   - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian)
-  - ▶️ [GG-3.0 Feature Demo](https://ibm.biz/gg_demo) 
+  - ▶️ [Walkthrough with GG-3.0](https://ibm.biz/gg_demo) 
 - **Additional Resources:**
   - **Paper:** [Granite Guardian](https://arxiv.org/abs/2412.07724)
   - 🤗 Datasets - [SocialStigmaQA](https://huggingface.co/datasets/ibm/SocialStigmaQA), [SocialStigmaQA-JA](https://huggingface.co/datasets/ibm/SocialStigmaQA-JA), [AttaQ](https://huggingface.co/datasets/ibm/AttaQ), [ProvoQ](https://huggingface.co/datasets/ibm/ProvoQ), [WikiContradict](https://huggingface.co/datasets/ibm/Wikipedia_contradict_benchmark)
