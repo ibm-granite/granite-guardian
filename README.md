@@ -19,7 +19,7 @@ They outperform similar models on standard benchmarks.
 
 - **Granite Guardian Collection:**
   - 🤗 [Granite-Guardian-3.2-5B](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b)
-  - 🤗 [Granite-Guardian-3.2-3B-a800](https://huggingface.co/ibm-granite/granite-guardian-3.2-3b-a800)
+  - 🤗 [Granite-Guardian-3.2-3B-a800](https://huggingface.co/ibm-granite/granite-guardian-3.2-3b-a800m)
   - 🤗 [Granite-Guardian-3.1-8B](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b)
   - 🤗 [Granite-Guardian-3.1-2B](https://huggingface.co/ibm-granite/granite-guardian-3.1-2b)
   - 🤗 [Granite-Guardian-HAP-125M](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)
