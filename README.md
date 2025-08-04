@@ -1,6 +1,8 @@
 # Granite Guardian
 
- 👉 (Feb-2025) Granite-Guardian-3.2 has landed! Two new model sizes, verbalized confidence, two new risks, updated notebooks, and results!
+👉 (Aug-2025) Granite-Guardian-3.3 has landed! Featuring a hybrid thinking mode with reasoning and improved bring-your-own-criteria capabilities!
+
+👉 (Feb-2025) Granite-Guardian-3.2 has landed! Two new model sizes, verbalized confidence, two new risks, updated notebooks, and results!
 
 👉 (Dec-2024) Granite-Guardian-3.1 has landed! Updated notebooks, documentation, and results!
 
@@ -8,8 +10,9 @@
 
 ## Overview
 
-The Granite Guardian models are a collection of models designed to detect risks in prompts and responses.
-Trained on instruction fine-tuned Granite languages models, these models can help with risk detection along many key dimensions catalogued in the [IBM AI Risk Atlas](https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas).
+The Granite Guardian family is a collection of models designed to judge if the input prompts and the output responses of an LLM based system meet specified criteria. The models come pre-baked with certain criteria including but not limited to: jailbreak attempts, profanity, and hallucinations related to tool calls and retrieval augmented generation in agent-based systems. Additionally, the models also allow users to bring their own criteria and tailor the judging behavior to specific use-cases.
+
+Trained on instruction fine-tuned Granite languages models, these models can help with detection along many key dimensions catalogued in the [IBM AI Risk Atlas](https://www.ibm.com/docs/en/watsonx/saas?topic=ai-risk-atlas).
 These models are trained on unique data comprising human annotations from socioeconomically diverse people and synthetic data informed by internal red-teaming. 
 They outperform similar models on standard benchmarks.
 
@@ -18,6 +21,7 @@ They outperform similar models on standard benchmarks.
 - :books: <a href="https://arxiv.org/abs/2412.07724">**Technical Report**</a>
 
 - **Granite Guardian Collection:**
+  - 🤗 [Granite-Guardian-3.3-8B](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b)
   - 🤗 [Granite-Guardian-3.2-5B](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b)
   - 🤗 [Granite-Guardian-3.2-3B-a800](https://huggingface.co/ibm-granite/granite-guardian-3.2-3b-a800m)
   - 🤗 [Granite-Guardian-3.1-8B](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b)
@@ -25,9 +29,10 @@ They outperform similar models on standard benchmarks.
   - 🤗 [Granite-Guardian-HAP-125M](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)
   - 🤗 [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)
 - **Granite Guardian Recipes:**
-  - 📕 [Quick Start Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.2/quick_start_vllm.ipynb) provides steps to start using Granite Guardian for detecting risks in prompts (user message), responses (assistant message), RAG use cases, or agentic workflows.
-  - 📕 [Detailed Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.2/detailed_guide_vllm.ipynb) explores different risk dimensions in depth and shows how to assess custom risk definitions with Granite Guardian. For finer-grained control over token-level risk probabilities and thresholding, please also consult this cookbook.
-  - 📕 [Usage Governance Workflow](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.1/usage_governance_workflow_vllm.ipynb) outlines steps for users investigating AI risks within a use-case, incentivizing them to explore risks from the IBM AI Risk Atlas using Granite Guardian.
+  - 📕 [Quick Start Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/quickstart.ipynb) provides steps to start using Granite Guardian for judging prompts (user message), responses (assistant message), RAG use cases, or agentic workflows.
+  - 📕 [Detailed Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_no_think.ipynb) explores different pre-baked criteria in depth and shows how to assess custom criteria with Granite Guardian.
+  - 📕 [Detailed Guide with Thinking](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_think.ipynb) is the same as the above guide, but with `think=True` toggled, allowing Granite Guardian to also produce reasoning traces in addition to a label.
+  <!-- - 📕 [Usage Governance Workflow](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.1/usage_governance_workflow_vllm.ipynb) outlines steps for users investigating AI risks within a use-case, incentivizing them to explore risks from the IBM AI Risk Atlas using Granite Guardian. -->
   - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)
 - **Demos:**
   - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian-3.1-8b)
@@ -37,11 +42,11 @@ They outperform similar models on standard benchmarks.
 - **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/models/guardian/)
 - **License:** [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-## Risk Taxonomy
+## Definitions for Pre-Baked Criteria
 
-We have developed Granite Guardian using a comprehensive harm risk taxonomy and have expanded its capabilities to detect hallucinations.
+We have developed Granite Guardian using a comprehensive harm taxonomy and have expanded its capabilities to detect hallucinations.
 
-| Risk | `risk_name` | Prompt | Response | Definition | version support
+| Criteria | `criteria_id` | Prompt | Response | Definition | version support
 | :--- | :---: | :---: | :---: | :--- | :--- |
 | Harm | harm | ✅ | ✅ | <details> <summary> Content considered universally harmful </summary> This is our general category, which should encompass a variety of risks including those not specifically addressed by the following categories. </details> | 3.0+ |
 | Social Bias | social_bias | ✅ | ✅ | <details> <summary> Systemic prejudice against groups </summary> based on shared identity or characteristics, often stemming from stereotypes or cultural influences. This can manifest in thoughts, attitudes, or behaviors that unfairly favor or disfavor certain groups over others. </details> | 3.0+ | 
@@ -60,26 +65,28 @@ We have developed Granite Guardian using a comprehensive harm risk taxonomy and 
 ## Usage
 ### Intended Use
 
-Granite Guardian is useful for risk detection use-cases which are applicable across a wide-range of enterprise applications -  
+Granite Guardian is useful for detection use-cases which are applicable across a wide-range of enterprise applications:
+
 - Detecting harm-related risks within prompt text, model responses, or conversations (as guardrails). These present fundamentally different use cases as the first assesses user supplied text, the second evaluates model generated text, and the third evaluates the last turn of a conversation.
-- RAG (retrieval-augmented generation) use-case where the guardian model assesses three key issues: context relevance (whether the retrieved context is relevant to the query), groundedness (whether the response is accurate and faithful to the provided context), and answer relevance (whether the response directly addresses the user's query).
+- RAG (retrieval-augmented generation) use-case where the guardian model assesses three key issues: context relevance (whether the retrieved context is relevant to the query), groundedness (whether the response is accurate and faithful to the provided context), and answer relevance (whether the response directly addresses the user’s query).
 - Function calling risk detection within agentic workflows, where Granite Guardian evaluates intermediate steps for syntactic and semantic hallucinations. This includes assessing the validity of function calls and detecting fabricated information, particularly during query translation.
  
 ### Scope of Use
 
-- Granite Guardian models must <ins>only</ins> be used strictly for the prescribed scoring mode, which generates yes/no outputs based on the specified template. Any deviation from this intended use may lead to unexpected, potentially unsafe, or harmful outputs. The model may also be prone to such behaviour via adversarial attacks. 
-- The model is targeted for risk definitions of general harm, social bias, profanity, violence, sexual content, unethical behavior, harm engagement, evasiveness, jailbreaking, groundedness/relevance for retrieval-augmented generation, and function calling hallucinations for agentic workflows. It is also applicable for use with custom risk definitions, but these require testing.
-It is also applicable for use with custom risk definitions, but these require testing.
+- Granite Guardian models must <ins>only</ins> be used strictly for the prescribed scoring mode, which generates yes/no outputs based on the specified template. Any deviation from this intended use may lead to unexpected, potentially unsafe, or harmful outputs. The model may also be prone to such behaviour via adversarial attacks.
+- The reasoning traces or chain of thoughts may contain unsafe content and may not be faithful.
+- The model is trained to assess general harm, social bias, profanity, violence, sexual content, unethical behavior, jailbreaking, or groundedness/relevance for retrieval-augmented generation, and function calling hallucinations for agentic workflows.
+It is also applicable for use with custom criteria, but these require testing.
 - The model is only trained and tested on English data.
-- Given their parameter size, the main Granite Guardian models are intended for use cases that require moderate cost, latency, and throughput such as model risk assessment, model observability and monitoring, and spot-checking inputs and outputs.
+- Given their parameter size, the main Granite Guardian models are intended for use cases that require moderate cost, latency, and throughput such as model assessment, model observability and monitoring, and spot-checking inputs and outputs.
 Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m) for recognizing hate, abuse and profanity can be used for guardrailing with stricter cost, latency, or throughput requirements.
 
 ## Evaluations
 
-![gg_journey.png](figures/gg_journey.png)
+![gg_journey.png](figures/gg_journey_3.3.png)
 
 ## Training Data
-Granite Guardian 3.1 models are trained on a combination of human annotated and synthetic data. Samples from [hh-rlhf](https://huggingface.co/datasets/Anthropic/hh-rlhf) dataset were used to obtain responses from Granite and Mixtral models.
+Granite Guardian 3.3 models are trained on a combination of human annotated and synthetic data. Samples from [hh-rlhf](https://huggingface.co/datasets/Anthropic/hh-rlhf) dataset were used to obtain responses from Granite and Mixtral models.
 These prompt-response pairs were annotated for different risk dimensions by a group of people at DataForce.
 DataForce prioritizes the well-being of its data contributors by ensuring they are paid fairly and receive livable wages for all projects.
 Additional synthetic data was used to supplement the training set to improve performance for conversational, hallucination and jailbreak related risks.
@@ -120,3 +127,8 @@ Additional synthetic data was used to supplement the training set to improve per
       url={https://arxiv.org/abs/2412.07724}, 
 }
 ```
+
+### Resources
+- ⭐️ Learn about the latest updates with Granite: https://www.ibm.com/granite
+- 📄 Get started with tutorials, best practices, and prompt engineering advice: https://www.ibm.com/granite/docs/
+- 💡 Learn about the latest Granite learning resources: https://ibm.biz/granite-learning-resources
