@@ -20,23 +20,20 @@ They outperform similar models on standard benchmarks.
 
 - :books: <a href="https://arxiv.org/abs/2412.07724">**Technical Report**</a>
 
-- **Granite Guardian Collection:**
-  - 🤗 [Granite-Guardian-3.3-8B](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b)
-  - 🤗 [Granite-Guardian-3.2-5B](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b)
-  - 🤗 [Granite-Guardian-3.2-3B-a800](https://huggingface.co/ibm-granite/granite-guardian-3.2-3b-a800m)
-  - 🤗 [Granite-Guardian-3.1-8B](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b)
-  - 🤗 [Granite-Guardian-3.1-2B](https://huggingface.co/ibm-granite/granite-guardian-3.1-2b)
-  - 🤗 [Granite-Guardian-HAP-125M](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)
-  - 🤗 [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)
-- **Granite Guardian Recipes:**
-  - 📕 [Quick Start Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/quickstart.ipynb) provides steps to start using Granite Guardian for judging prompts (user message), responses (assistant message), RAG use cases, or agentic workflows.
-  - 📕 [Detailed Guide](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_no_think.ipynb) explores different pre-baked criteria in depth and shows how to assess custom criteria with Granite Guardian.
-  - 📕 [Detailed Guide with Thinking](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_think.ipynb) is the same as the above guide, but with `think=True` toggled, allowing Granite Guardian to also produce reasoning traces in addition to a label.
-  <!-- - 📕 [Usage Governance Workflow](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.1/usage_governance_workflow_vllm.ipynb) outlines steps for users investigating AI risks within a use-case, incentivizing them to explore risks from the IBM AI Risk Atlas using Granite Guardian. -->
-  - 📕 [Hate, Abuse, and Profanity (HAP) Detection](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)
+## Granite Guardian Collection
+
+| Model Name | Model Link | Quickstart | Detailed Guide |
+|---|---|---|---|
+| Granite-Guardian-3.3-8B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b)  |  [📕 Link](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/quickstart.ipynb)  | 1. [📕 Link - Think](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_think.ipynb) <br> 2. [📕 Link - No Think](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_no_think.ipynb) |
+| Granite-Guardian-3.2-5B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/detailed_guide_vllm.ipynb)  |
+| Granite-Guardian-3.2-3B-A800M  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.2-3b-a800m)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/detailed_guide_vllm.ipynb)  |
+| Granite-Guardian-3.1-8B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.1/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.1/detailed_guide_vllm.ipynb)  |
+| Granite-Guardian-3.1-2B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.1-2b)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.1/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.1/detailed_guide_vllm.ipynb)  |
+| Granite-Guardian-HAP-125M  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-hap-125m)  | - | [📕 Link](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)  |
+| Granite-Guardian-HAP-38M  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)  | - | [📕 Link](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)  |
+ 
 - **Demos:**
   - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian-3.1-8b)
-  - ▶️ [Walkthrough with GG-3.0](https://ibm.biz/gg_demo) 
 - **Additional Resources:**
   - 🤗 Datasets - [SocialStigmaQA](https://huggingface.co/datasets/ibm/SocialStigmaQA), [SocialStigmaQA-JA](https://huggingface.co/datasets/ibm/SocialStigmaQA-JA), [AttaQ](https://huggingface.co/datasets/ibm/AttaQ), [ProvoQ](https://huggingface.co/datasets/ibm/ProvoQ), [WikiContradict](https://huggingface.co/datasets/ibm/Wikipedia_contradict_benchmark)
 - **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/models/guardian/)
@@ -92,6 +89,8 @@ score, _ = parse_response(response)
 
 print(f"# score: {score}\n") # score: yes
 ```
+
+For a detailed walkthrough and working examples, explore our [comprehensive cookbook](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_think.ipynb).
 
 ## Evaluations
 
