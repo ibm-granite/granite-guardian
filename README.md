@@ -44,17 +44,8 @@ They outperform similar models on standard benchmarks.
 
 
 ## Usage
-### Intended Use
 
-Granite Guardian is useful for detection use-cases which are applicable across a wide-range of enterprise applications:
-
-- Detecting harm-related risks within prompt text, model responses, or conversations (as guardrails). These present fundamentally different use cases as the first assesses user supplied text, the second evaluates model generated text, and the third evaluates the last turn of a conversation.
-- RAG (retrieval-augmented generation) use-case where the guardian model assesses three key issues: context relevance (whether the retrieved context is relevant to the query), groundedness (whether the response is accurate and faithful to the provided context), and answer relevance (whether the response directly addresses the user’s query).
-- Function calling risk detection within agentic workflows, where Granite Guardian evaluates intermediate steps for syntactic and semantic hallucinations. This includes assessing the validity of function calls and detecting fabricated information, particularly during query translation.
-
-### Examples
-
-#### Example 1: Detect lack of groundednedss of model's response in RAG settings
+### Example 1: Detect lack of groundednedss of model's response in RAG settings
 
 Here we see how to use the Granite Guardian in thinking mode by passing ```think=True``` in the ```apply_chat_template``` method. 
 
@@ -84,7 +75,7 @@ Claim_error_span: on December 24, 1922 Since there is a risk associated, the sco
 
 ```
 
-#### Example 2: Detect jailbreak attempts in prompts
+### Example 2: Detect jailbreak attempts in prompts
 Here we will set ```"criteria_id": "jailbreak"``` in the guardian_config object that is passed to `apply_chat_template` method.
 
 ```python
@@ -102,7 +93,11 @@ score, _ = parse_response(response)
 print(f"# score: {score}\n") # score: yes
 ```
 
-### Scope of Use
+## Evaluations
+
+![gg_journey.png](figures/gg_journey_3.3.png)
+
+## Scope of Use
 
 - Granite Guardian models must <ins>only</ins> be used strictly for the prescribed scoring mode, which generates yes/no outputs based on the specified template. Any deviation from this intended use may lead to unexpected, potentially unsafe, or harmful outputs. The model may also be prone to such behaviour via adversarial attacks.
 - The reasoning traces or chain of thoughts may contain unsafe content and may not be faithful.
@@ -112,12 +107,8 @@ It is also applicable for use with custom criteria, but these require testing.
 - Given their parameter size, the main Granite Guardian models are intended for use cases that require moderate cost, latency, and throughput such as model assessment, model observability and monitoring, and spot-checking inputs and outputs.
 Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-granite/granite-guardian-hap-38m) for recognizing hate, abuse and profanity can be used for guardrailing with stricter cost, latency, or throughput requirements.
 
-## Evaluations
 
-![gg_journey.png](figures/gg_journey_3.3.png)
-
-
-### Citation
+## Citation
 ```latex
 @misc{padhi2024graniteguardian,
       title={Granite Guardian}, 
@@ -130,7 +121,7 @@ Smaller models, like the [Granite-Guardian-HAP-38M](https://huggingface.co/ibm-g
 }
 ```
 
-### Resources
+## Resources
 - ⭐️ Learn about the latest updates with Granite: https://www.ibm.com/granite
 - 📄 Get started with tutorials, best practices, and prompt engineering advice: https://www.ibm.com/granite/docs/
 - 💡 Learn about the latest Granite learning resources: https://ibm.biz/granite-learning-resources
