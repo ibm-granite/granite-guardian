@@ -1,12 +1,14 @@
 # Granite Guardian
 
-👉 (Aug-2025) Granite-Guardian-3.3 has landed! Featuring a hybrid thinking mode with reasoning and improved bring-your-own-criteria capabilities!
+📌  What's New?
 
-👉 (Feb-2025) Granite-Guardian-3.2 has landed! Two new model sizes, verbalized confidence, two new risks, updated notebooks, and results!
+✨ **Aug 2025**: [Granite-Guardian-3.3](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b) is live! 🤖 New hybrid thinking mode for better reasoning and improved bring-your-own-criteria functionality.
 
-👉 (Dec-2024) Granite-Guardian-3.1 has landed! Updated notebooks, documentation, and results!
+✨ Feb 2025: Granite-Guardian-3.2 is out! ⚙️ Adds two new model sizes, verbalized confidence, and two new risks. Updated notebooks included.
 
-👉 (Dec-2024) Added :books: <a href="https://arxiv.org/abs/2412.07724">**technical report**</a> for Granite-Guardian-3.0
+✨ Dec 2024: Granite-Guardian-3.1 has landed! 🛠️ Featuring updated notebooks, documentation, and results.
+
+✨ Dec 2024: 📚 Check out the new technical report for Granite-Guardian-3.0.
 
 ## Overview
 
