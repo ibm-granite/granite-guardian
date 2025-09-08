@@ -2,6 +2,10 @@
 
 📌  What's New?
 
+✨ **Sept 2025**: 🏆 [Granite-Guardian-3.3](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b) has has secured the 3rd position on the [LLM‑AggreFact benchmark](https://llm-aggrefact.github.io/), a comprehensive fact‑checking benchmark that consolidates 11 datasets on grounded factuality.
+
+✨ **Sept 2025**: Two new LoRA adapters for [multi-risk detection](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b-lora-harm-categories) and [harm-correction](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b-lora-harm-correction) are live!
+
 ✨ **Aug 2025**: [Granite-Guardian-3.3](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b) is live! 🤖 New hybrid thinking mode for better reasoning and improved bring-your-own-criteria functionality.
 
 ✨ Feb 2025: Granite-Guardian-3.2 is out! ⚙️ Adds two new model sizes, verbalized confidence, and two new risks. Updated notebooks included.
@@ -27,6 +31,8 @@ They outperform similar models on standard benchmarks.
 | Model Name | Model Link | Quickstart | Detailed Guide |
 |---|---|---|---|
 | Granite-Guardian-3.3-8B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.3-8b)  |  [📕 Link](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/quickstart.ipynb)  | [📕 Link - Think](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_think.ipynb)<br>[📕 Link - No Think](https://github.com/ibm-granite/granite-guardian/tree/main/cookbooks/granite-guardian-3.3/detailed_guide_no_think.ipynb)|
+| Granite-Guardian-3.2-5B-lora-harm-categories  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b-lora-harm-categories)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2-lora/harm_categories_guide_vllm.ipynb)  |  |
+| Granite-Guardian-3.2-5B-lora-harm-correction  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b-lora-harm-correction)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2-lora/harm_correction_guide_vllm.ipynb)  |  |
 | Granite-Guardian-3.2-5B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.2-5b)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/detailed_guide_vllm.ipynb)  |
 | Granite-Guardian-3.2-3B-A800M  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.2-3b-a800m)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.2/detailed_guide_vllm.ipynb)  |
 | Granite-Guardian-3.1-8B  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-3.1-8b)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.1/quick_start_vllm.ipynb)  | [📕 Link](https://github.com/ibm-granite/granite-guardian/blob/main/cookbooks/granite-guardian-3.1/detailed_guide_vllm.ipynb)  |
