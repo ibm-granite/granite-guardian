@@ -41,7 +41,7 @@ They outperform similar models on standard benchmarks.
 | Granite-Guardian-HAP-38M  | [🤗 Link](https://huggingface.co/ibm-granite/granite-guardian-hap-38m)  | - | [📕 Link](https://github.com/ibm-granite-community/granite-snack-cookbook/blob/main/recipes/Granite_Guardian/HAP.ipynb)  |
  
 - **Demos:**
-  - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian-3.1-8b)
+  - 🤗 [HF Spaces Demo](https://huggingface.co/spaces/ibm-granite/granite-guardian)
 - **Additional Resources:**
   - 🤗 Datasets - [SocialStigmaQA](https://huggingface.co/datasets/ibm/SocialStigmaQA), [SocialStigmaQA-JA](https://huggingface.co/datasets/ibm/SocialStigmaQA-JA), [AttaQ](https://huggingface.co/datasets/ibm/AttaQ), [ProvoQ](https://huggingface.co/datasets/ibm/ProvoQ), [WikiContradict](https://huggingface.co/datasets/ibm/Wikipedia_contradict_benchmark)
 - **Website**: [Granite Guardian Docs](https://www.ibm.com/granite/docs/models/guardian/)
