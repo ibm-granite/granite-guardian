@@ -14,7 +14,7 @@ from sklearn.metrics import (
 from tqdm import tqdm
 
 # Root directory for locally-prepared benchmark data (ood_safety, TRUE).
-# There is no default — set GG_EVALS_DATA_ROOT to the directory you prepared
+# There is no default - set GG_EVALS_DATA_ROOT to the directory you prepared
 # following data/README.md. HF-native benchmarks (LM-AggreFact, FC-Reward-Bench)
 # do not need this.
 DATA_ROOT = os.environ.get("GG_EVALS_DATA_ROOT")

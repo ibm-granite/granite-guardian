@@ -1,4 +1,4 @@
-"""Granite Guardian 3.3 — criteria_id API with think / no-think.
+"""Granite Guardian 3.3 - criteria_id API with think / no-think.
 
 Risk is selected via ``guardian_config={"criteria_id": ...}``; documents are
 passed with the ``documents=`` kwarg and tools with ``available_tools=``.

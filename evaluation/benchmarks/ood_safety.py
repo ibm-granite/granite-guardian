@@ -1,4 +1,4 @@
-"""OOD Safety (harm) benchmark — F1 per dataset, aggregate = mean F1.
+"""OOD Safety (harm) benchmark - F1 per dataset, aggregate = mean F1.
 
 Ten out-of-distribution harm datasets. See data/README.md for how to obtain
 and lay them out under GG_EVALS_DATA_ROOT.

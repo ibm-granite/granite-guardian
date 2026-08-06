@@ -1,9 +1,9 @@
-"""TRUE benchmark — groundedness with document chunking.
+"""TRUE benchmark - groundedness with document chunking.
 
 Nine faithfulness datasets from the TRUE benchmark. Older Granite Guardian
-cards (3.0–3.2) report RAG groundedness as the mean **AUC** across these
+cards (3.0-3.2) report RAG groundedness as the mean **AUC** across these
 datasets; 3.3 reports mean balanced accuracy. Both are written to
-Aggregate.json — read the column for your model generation.
+Aggregate.json - read the column for your model generation.
 
 See data/README.md for how to obtain the TRUE datasets and lay them out
 under GG_EVALS_DATA_ROOT.
@@ -28,7 +28,7 @@ CRITERIA_ID = "groundedness"
 PARTITION = "train"
 # Upper bound on document-chunk size (tokens). Capped at runtime to the model's
 # context window minus HEADROOM (for the prompt template, the claim, and the
-# generated verdict), so the same code works for the 8K 3.0–3.2 family and the
+# generated verdict), so the same code works for the 8K 3.0-3.2 family and the
 # 128K 3.3 / 4.1 models.
 MAX_CHUNK_SIZE = 32000
 HEADROOM = 2048
@@ -122,7 +122,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
     all_metrics = []
 
     # Cap the chunk size at the model's context window (minus headroom for the
-    # template, claim, and generated verdict). The 3.0–3.2 family is 8K.
+    # template, claim, and generated verdict). The 3.0-3.2 family is 8K.
     ctx = _model_context_len(llm, tokenizer)
     chunk_size = MAX_CHUNK_SIZE
     if ctx:

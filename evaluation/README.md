@@ -30,7 +30,7 @@ variants need less.
 
 ## Quickstart
 
-Run the two turnkey benchmarks on Granite Guardian 4.1 — no data setup needed:
+Run the two turnkey benchmarks on Granite Guardian 4.1, no data setup needed:
 
 ```bash
 python run_eval.py \
@@ -49,7 +49,7 @@ python run_eval.py \
     --benchmarks groundedness_aggrefact function_calling --think
 ```
 
-Run everything (after preparing the harm and TRUE data — see below):
+Run everything (after preparing the harm and TRUE data, see below):
 
 ```bash
 export GG_EVALS_DATA_ROOT=/path/to/your/eval_data
@@ -75,50 +75,26 @@ to override.
 
 The three modules differ only in how the criterion and inputs are encoded:
 
-- **`granite-guardian-3`** (3.0–3.2) — `risk_name` config, document in a
+- **`granite-guardian-3`** (3.0-3.2): `risk_name` config, document in a
   `context` turn, bare `Yes`/`No`. Harm and groundedness only; no think mode.
-- **`granite-guardian-3.3`** — `criteria_id` config, `documents=`/`available_tools=`,
+- **`granite-guardian-3.3`**: `criteria_id` config, `documents=`/`available_tools=`,
   `<score>yes/no</score>`; supports `--think`.
-- **`granite-guardian-4.1`** — explicit `<guardian>` block,
-  `<think>…</think><score>yes/no</score>`; supports `--think`.
+- **`granite-guardian-4.1`**: explicit `<guardian>` block,
+  `<think>...</think><score>yes/no</score>`; supports `--think`.
 
-## Expected numbers (from the model cards)
+## Reproducing the card benchmarks
 
-Harm is F1; RAG on TRUE is AUC for 3.0–3.2 and balanced accuracy for 3.3; RAG on
-LM-AggreFact and function calling are balanced accuracy. Where a card reports
-both reasoning modes, no-think is the headline number.
-
-| Model | Harm F1 | TRUE | LM-AggreFact | FC-Reward-Bench |
-|---|---|---|---|---|
-| 3.0 2B | 0.67 | 0.81 (AUC) | — | — |
-| 3.0 8B | 0.76 | 0.85 (AUC) | — | — |
-| 3.1 2B | 0.75 | 0.84 (AUC) | — | — |
-| 3.1 8B | 0.80 | 0.86 (AUC) | — | — |
-| 3.2 3B-A800M | 0.74 | 0.77 (AUC) | — | — |
-| 3.2 5B | 0.784 | 0.84 (AUC) | — | — |
-| 3.3 8B (no-think) | 0.81 | 0.777 (BAcc) | 0.761 | 0.74 |
-| 3.3 8B (think) | 0.79 | 0.773 (BAcc) | 0.765 | 0.71 |
-| 4.1 8B (no-think) | 0.79 | — | 0.760 | 0.79 |
-| 4.1 8B (think) | 0.78 | — | 0.764 | 0.78 |
-
-Function calling and LM-AggreFact arrived with 3.3, so earlier generations have
-no value for them; 4.1 reports RAG on LM-AggreFact rather than TRUE.
-
-Harm F1, LM-AggreFact, FC-Reward-Bench, and the TRUE AUC columns reproduce to
-within run-to-run variance. The **TRUE balanced-accuracy** column is the
-exception: it thresholds the risk probability at a fixed 0.5, giving ≈0.76 for
-3.3 vs the card's 0.777. Ranking is unaffected (TRUE AUC ≈0.873), so it's an
-operating-point difference — use the AUC columns for a threshold-free comparison.
-
-### Reproduction commands
+Harm is F1; RAG on TRUE is AUC for 3.0-3.2 and balanced accuracy for 3.3; RAG on
+LM-AggreFact and function calling are balanced accuracy. Function calling and
+LM-AggreFact arrived with 3.3; 4.1 reports RAG on LM-AggreFact rather than TRUE.
 
 ```bash
-# 3.0–3.2 (harm + TRUE — requires GG_EVALS_DATA_ROOT)
+# 3.0-3.2 (harm + TRUE; requires GG_EVALS_DATA_ROOT)
 python run_eval.py \
     --model-path ibm-granite/granite-guardian-3.0-8b \
     --benchmarks ood_safety groundedness_true
 
-# 3.3 (all four; add --think for the think column)
+# 3.3 (all four; add --think for reasoning mode)
 python run_eval.py \
     --model-path ibm-granite/granite-guardian-3.3-8b
 
@@ -127,6 +103,10 @@ python run_eval.py \
     --model-path ibm-granite/granite-guardian-4.1-8b \
     --benchmarks ood_safety groundedness_aggrefact function_calling
 ```
+
+> The TRUE **balanced-accuracy** operating point is fixed at 0.5, which reads
+> slightly below the 3.3 card (≈0.76 vs 0.777); the ranking is unaffected
+> (TRUE AUC ≈0.873), so use AUC for a threshold-free comparison.
 
 ## How scoring works
 
@@ -168,17 +148,58 @@ Output is identical to a single-process run. `--keep-shards` retains the
 per-shard directories for debugging. Non-shardable benchmarks in the same run
 execute sequentially.
 
-## Extending
+## Bring your own ...
 
-**Add a model.** Drop `models/my_model.py` exporting `format_fn(sample,
-ds_config, tokenizer, **kwargs) -> str` and `parse_fn(output, tokenizer,
-nlogprobs) -> (label, prob)`. Set `MODEL_NAME` to the registry key you want. It
-is auto-discovered and available as `--model-type`. This is also where a baseline
-guardrail model (e.g. a Llama Guard) would be added.
+The framework is three independent registries: models, benchmarks, and data.
+Each extends by dropping in one file; nothing else has to change.
 
-**Add a benchmark.** Drop `benchmarks/my_bench.py` with a `run(bench_cfg,
-ensure_model, args, guard_fmt, guard_parse, out_base)` function and register it
-in `benchmarks/__init__.py`. Set `run.SUPPORTS_SHARDING = True` if it shards.
+### Bring your own guard
+
+Any guardrail can be evaluated against these benchmarks, not just Granite
+Guardian. Drop a `models/<name>.py` exporting two functions and a name:
+
+```python
+MODEL_NAME = "my-guard"   # becomes the --model-type key
+
+def format_fn(sample, ds_config, tokenizer, **kwargs):
+    # Build the prompt for one row. Granite-specific kwargs (criteria_id,
+    # think) arrive via **kwargs; ignore the ones your guard doesn't use.
+    return prompt_string
+
+def parse_fn(output, tokenizer, nlogprobs):
+    # Read the verdict -> (label: 1=risk/0=safe, prob: probability of risk)
+    return label, prob
+```
+
+The module is auto-discovered on startup and offered as `--model-type my-guard`
+(pass it explicitly, since the path-based auto-inference only knows Granite
+names). For safe/unsafe-style verdicts like Llama Guard or ShieldGemma,
+`models/_helpers.py` provides `softmax_safe_unsafe`; for `Yes`/`No` guards use
+`softmax_yes_no`.
+
+### Bring your own benchmark
+
+Drop a `benchmarks/<name>.py` with a `run` function and register it:
+
+```python
+# benchmarks/my_bench.py
+def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
+    llm, tokenizer, sp = ensure_model()   # lazy; loaded once, shared
+    ...                                    # format -> generate -> score -> save
+run.SUPPORTS_SHARDING = True               # optional: enables --num-shards
+```
+
+Add it to `BENCHMARKS` in `benchmarks/__init__.py` and it becomes a valid
+`--benchmarks` choice. `benchmarks/_common.py` has the shared helpers
+(`format_all`, `generate_and_parse`, `compute_metrics`, `save_aggregate`).
+
+### Bring your own dataset
+
+The two turnkey benchmarks load from the Hugging Face Hub; the other two read
+locally-prepared datasets from `GG_EVALS_DATA_ROOT`. To add your own data, save
+it in the Arrow format the loader expects and point the env var at it. See
+[`data/README.md`](data/README.md) for the directory layout, per-example schema,
+and label conventions.
 
 ## Notes
 

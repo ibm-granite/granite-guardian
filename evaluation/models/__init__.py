@@ -1,4 +1,4 @@
-"""Model registry — auto-discovers all model modules in this package.
+"""Model registry - auto-discovers all model modules in this package.
 
 Each model module must export:
   format_fn(sample, ds_config, tokenizer, **kwargs) -> prompt string

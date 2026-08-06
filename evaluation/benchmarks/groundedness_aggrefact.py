@@ -1,4 +1,4 @@
-"""LM-AggreFact benchmark — balanced accuracy per dataset + overall.
+"""LM-AggreFact benchmark - balanced accuracy per dataset + overall.
 
 Data is loaded live from Hugging Face (``lytang/LLM-AggreFact``); nothing is
 stored in this repo. You may need to accept the dataset terms on the Hub and
@@ -64,7 +64,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
     df.to_json(os.path.join(out_base, "predictions.jsonl"), orient="records", lines=True)
 
     if num_shards > 1:
-        print(f"  Shard {shard_index} done — predictions saved; the orchestrator will merge.")
+        print(f"  Shard {shard_index} done - predictions saved; the orchestrator will merge.")
         return
 
     bacc_table = _per_dataset_bacc(df)

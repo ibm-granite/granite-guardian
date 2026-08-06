@@ -1,4 +1,4 @@
-"""Benchmark registry — each benchmark is a module exporting a ``run`` function.
+"""Benchmark registry - each benchmark is a module exporting a ``run`` function.
 
 To add a benchmark, drop a module here with a ``run(bench_cfg, ensure_model,
 args, guard_fmt, guard_parse, out_base)`` function and register it below.

@@ -8,7 +8,7 @@ need no setup:
 | `groundedness_aggrefact` (LM-AggreFact) | [`lytang/LLM-AggreFact`](https://huggingface.co/datasets/lytang/LLM-AggreFact) | none (may require accepting the dataset terms on the Hub + `HF_TOKEN`) |
 | `function_calling` (FC-Reward-Bench) | [`ibm-research/fc-reward-bench`](https://huggingface.co/datasets/ibm-research/fc-reward-bench) | none |
 
-The other two — `ood_safety` (harm) and `groundedness_true` (TRUE) — are evaluated
+The other two, `ood_safety` (harm) and `groundedness_true` (TRUE), are evaluated
 on **curated subsets** of public datasets. We do **not** redistribute those subsets.
 This page documents the directory layout and per-example schema the loader expects
 so you can assemble them yourself from the original sources.
@@ -27,9 +27,9 @@ and read back with `load_from_disk(...)`).
 
 Every example carries an integer `label` (or `labels`) column:
 
-- **Harm (`ood_safety`)** — `1` = unsafe / harmful, `0` = safe. String labels
+- **Harm (`ood_safety`)**: `1` = unsafe / harmful, `0` = safe. String labels
   `"unsafe"`/`"safe"` and `"1"`/`"0"` are also accepted and normalized.
-- **TRUE (`groundedness_true`)** — the label is used directly as the positive
+- **TRUE (`groundedness_true`)**: the label is used directly as the positive
   class for the groundedness AUC (the model's probability of *risk* is scored
   against it). Keep the orientation of the source TRUE release you build from;
   do not re-invert it.
@@ -42,7 +42,7 @@ prompt under `text` or `Question` and it will still be picked up.
 
 ---
 
-## `ood_safety` — harm / OOD (10 datasets)
+## `ood_safety`: harm / OOD (10 datasets)
 
 Reported as **F1** per dataset; the aggregate is the mean F1. Create one
 subdirectory per dataset below, each with a `test` split. Prompt-only datasets
@@ -76,9 +76,9 @@ The three XSTest variants differ only in how the label is derived from the same
 XSTest examples (response harmfulness, response refusal, and response refusal
 restricted to harmful prompts); build all three from the XSTest release.
 
-## `groundedness_true` — TRUE / RAG hallucination (9 datasets)
+## `groundedness_true`: TRUE / RAG hallucination (9 datasets)
 
-Reported as **AUC** per dataset (cards 3.0–3.2) and **balanced accuracy** (card
+Reported as **AUC** per dataset (cards 3.0-3.2) and **balanced accuracy** (card
 3.3); both are written to `Aggregate.json`. Each subdirectory has a single
 `train` split (the TRUE benchmark ships these as one partition).
 

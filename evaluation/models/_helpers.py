@@ -13,7 +13,7 @@ def softmax_yes_no(logprobs):
 
     Aggregates the exp-logprobs of every candidate token that decodes to
     "yes"/"no" (case-insensitive) across generation steps, then returns the
-    normalized probability mass on "yes" — i.e. P(risk detected).
+    normalized probability mass on "yes" - i.e. P(risk detected).
     """
     yes_prob, no_prob = 1e-50, 1e-50
     for step in logprobs:

@@ -1,4 +1,4 @@
-"""Function-calling hallucination benchmark — FC-Reward-Bench.
+"""Function-calling hallucination benchmark - FC-Reward-Bench.
 
 Data is loaded live from Hugging Face (``ibm-research/fc-reward-bench``,
 Apache-2.0); nothing is stored in this repo. Each of the 1,500 rows pairs a

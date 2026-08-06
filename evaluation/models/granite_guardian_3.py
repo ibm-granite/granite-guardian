@@ -1,4 +1,4 @@
-"""Granite Guardian 3.0 / 3.1 / 3.2 — risk_name API.
+"""Granite Guardian 3.0 / 3.1 / 3.2 - risk_name API.
 
 These generations share one prompt API (distinct from 3.3 and 4.1):
   - risk is selected via ``guardian_config={"risk_name": ...}``;
@@ -8,7 +8,7 @@ These generations share one prompt API (distinct from 3.3 and 4.1):
     ``<confidence> ... </confidence>`` tag, so we read the first word).
 
 The probability of risk is the softmax over the aggregated Yes/No token
-logprobs — identical to the published cookbook ``get_probabilities``.
+logprobs - identical to the published cookbook ``get_probabilities``.
 
 Covers: granite-guardian-3.0-2b/8b, 3.1-2b/8b, 3.2-3b-a800m, 3.2-5b.
 Reference cookbooks: cookbooks/granite-guardian-3.{0,1,2}/quick_start_vllm.ipynb
@@ -27,7 +27,7 @@ def format_fn(sample, ds_config, tokenizer, *, think=False, criteria_id="harm"):
 
     ``criteria_id`` maps 1:1 to the model's ``risk_name`` (``harm`` /
     ``groundedness`` / ``function_call``). ``think`` is accepted for a uniform
-    benchmark interface but ignored — these generations have no think mode.
+    benchmark interface but ignored - these generations have no think mode.
     """
     from benchmarks._common import resolve_col, USER_COLS, ASST_COLS, CTX_COLS
 

@@ -55,8 +55,8 @@ def load_model(args):
     print(f"Loading model: {args.base_model}")
     llm_kwargs = dict(model=args.base_model, tensor_parallel_size=args.ngpus,
                       seed=args.seed, trust_remote_code=True)
-    # If unset, let vLLM derive the context length from the model config — the
-    # 3.0–3.2 family is 8K while 3.3 / 4.1 are 128K.
+    # If unset, let vLLM derive the context length from the model config - the
+    # 3.0-3.2 family is 8K while 3.3 / 4.1 are 128K.
     if args.max_model_len:
         llm_kwargs["max_model_len"] = args.max_model_len
     llm = LLM(**llm_kwargs)
@@ -200,7 +200,7 @@ def _run_sharded_benchmark(bench_name, num_shards, args, out_dir, model_id):
             failed.append(i)
             print(f"  ERROR: Shard {i} failed (exit code {proc.returncode})")
     if failed:
-        print(f"\n  FAILED shards: {failed} — skipping merge for {bench_name}")
+        print(f"\n  FAILED shards: {failed} - skipping merge for {bench_name}")
         return False
 
     print(f"\n  Merging {num_shards} shards...")
@@ -234,7 +234,7 @@ def main():
     p.add_argument("--nlogprobs", type=int, default=20)
     p.add_argument("--max-model-len", type=int, default=None,
                    help="Context length. Default: derive from the model config "
-                        "(8K for 3.0–3.2, 128K for 3.3 / 4.1).")
+                        "(8K for 3.0-3.2, 128K for 3.3 / 4.1).")
     p.add_argument("--out-dir", default="results/")
     p.add_argument("--save-predictions", action="store_true")
     p.add_argument("--num-shards", type=int, default=1,
@@ -260,7 +260,7 @@ def main():
     model_id = f"{args.model_type}_{args.base_model.replace('/', '_')}"
     think_str = "think" if args.think else "no_think"
 
-    # Lazy model loading — benchmarks that don't need the model (e.g. shard
+    # Lazy model loading - benchmarks that don't need the model (e.g. shard
     # orchestration) never trigger a load.
     state = {"llm": None, "tokenizer": None, "sp": None}
 

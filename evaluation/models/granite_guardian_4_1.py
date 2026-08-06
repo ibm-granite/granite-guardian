@@ -1,4 +1,4 @@
-"""Granite Guardian 4.1 — explicit <guardian> block with think / no-think.
+"""Granite Guardian 4.1 - explicit <guardian> block with think / no-think.
 
 The judging criterion is written into a ``<guardian>`` block appended as the
 final user turn; documents are passed with ``documents=`` and tools with
@@ -42,7 +42,7 @@ CRITERIA = {
     ),
 }
 
-# Judge instructions — think / no-think (v2), matching the cookbook.
+# Judge instructions - think / no-think (v2), matching the cookbook.
 _JUDGE_THINK = (
     "<guardian><think>As a judge agent, carefully analyze whether the provided text meets the "
     "given judging criteria. Use all available information, including conversations, "
