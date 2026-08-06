@@ -108,6 +108,15 @@ python run_eval.py \
 > slightly below the 3.3 card (≈0.76 vs 0.777); the ranking is unaffected
 > (TRUE AUC ≈0.873), so use AUC for a threshold-free comparison.
 
+> The **3.3** LM-AggreFact card number (0.765) is the one reported by the official
+> [MiniCheck](https://github.com/Liyan06/MiniCheck) project on the
+> [LLM-AggreFact leaderboard](https://llm-aggrefact.github.io/), which runs 3.3 in
+> think mode with a SentenceFusion protocol. Cite and run MiniCheck for that exact
+> figure. This framework uses a single-pass groundedness path (the same one 4.1
+> uses); on 3.3 it reproduces the card to within a point (≈0.758) and matches
+> MiniCheck to <1 point on 10 of 11 datasets. The 4.1 LM-AggreFact card number is
+> reproduced exactly by this path.
+
 ## How scoring works
 
 Each row becomes a Guardian prompt whose output gives a **label** (`1` = risk,
