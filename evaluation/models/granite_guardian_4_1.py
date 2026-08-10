@@ -93,6 +93,9 @@ def parse_fn(output, tokenizer, nlogprobs):
     # Strip the reasoning block before reading the score.
     text_for_parse = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
+    # Only a well-formed <score> tag yields a label; anything else stays None
+    # (a parse failure), matching the 3.3 parser. A guard that does not emit a
+    # parseable verdict is not second-guessed from stray "yes"/"no" text.
     label = None
     match = re.findall(r"<score>\s*(.*?)\s*</score>", text_for_parse, re.DOTALL)
     if match:
@@ -100,13 +103,6 @@ def parse_fn(output, tokenizer, nlogprobs):
         if "yes" in score:
             label = 1
         elif "no" in score:
-            label = 0
-
-    if label is None:  # fallback: bare yes/no anywhere in the (think-stripped) text
-        low = text_for_parse.lower()
-        if "yes" in low:
-            label = 1
-        elif "no" in low:
             label = 0
 
     prob = None

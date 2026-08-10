@@ -20,13 +20,16 @@ from benchmarks._common import (
 CRITERIA_ID = "function_call"
 HF_DATASET = "ibm-research/fc-reward-bench"
 SPLIT = "data"
+# Pin the dataset revision so the reported numbers stay reproducible if the
+# Hub copy is updated later. Bump this deliberately to adopt a newer release.
+REVISION = "269929c3329e603e87ed3203de42896cc03ddbf3"
 
 DS_CONFIG = {"user_col": "prompt", "assistant_col": "response", "tools_col": "tools"}
 
 
 def _load_fc_reward_bench():
     """Expand each pair row into a safe (chosen) and an unsafe (rejected) row."""
-    raw = load_dataset(HF_DATASET, split=SPLIT)
+    raw = load_dataset(HF_DATASET, split=SPLIT, revision=REVISION)
     rows = []
     for r in raw:
         conv = r["conversation"]

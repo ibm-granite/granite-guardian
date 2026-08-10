@@ -15,8 +15,17 @@ from datasets import Dataset
 from tqdm import tqdm
 
 import nltk
-nltk.download("punkt_tab", quiet=True)
 from nltk.tokenize import sent_tokenize
+
+try:
+    nltk.data.find("tokenizers/punkt_tab")
+except LookupError:
+    if not nltk.download("punkt_tab", quiet=True):
+        raise RuntimeError(
+            "The NLTK 'punkt_tab' tokenizer is required for the TRUE benchmark "
+            "but is not installed and could not be downloaded (no network?). "
+            "Install it once with: python -c \"import nltk; nltk.download('punkt_tab')\""
+        )
 
 from benchmarks._common import (
     require_data_root, load_data, format_all, generate_and_parse,

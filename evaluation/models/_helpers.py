@@ -3,8 +3,6 @@
 import json
 import math
 
-import torch
-
 from benchmarks._common import resolve_col, USER_COLS, ASST_COLS, CTX_COLS
 
 
@@ -23,9 +21,7 @@ def softmax_yes_no(logprobs):
                 yes_prob += math.exp(lp.logprob)
             elif tok == "no":
                 no_prob += math.exp(lp.logprob)
-    return torch.softmax(
-        torch.tensor([math.log(no_prob), math.log(yes_prob)]), dim=0
-    )[1].item()
+    return yes_prob / (yes_prob + no_prob)
 
 
 def softmax_safe_unsafe(logprobs):
@@ -42,9 +38,7 @@ def softmax_safe_unsafe(logprobs):
                 safe_prob += math.exp(lp.logprob)
             elif tok == "unsafe":
                 unsafe_prob += math.exp(lp.logprob)
-    return torch.softmax(
-        torch.tensor([math.log(safe_prob), math.log(unsafe_prob)]), dim=0
-    )[1].item()
+    return unsafe_prob / (safe_prob + unsafe_prob)
 
 
 def build_messages(sample, ds_config):

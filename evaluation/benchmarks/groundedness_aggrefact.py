@@ -18,6 +18,9 @@ from sklearn.metrics import balanced_accuracy_score
 
 HF_DATASET = "lytang/LLM-AggreFact"
 SPLIT = "test"
+# Pin the dataset revision so the reported numbers stay reproducible if the
+# Hub copy is updated later. Bump this deliberately to adopt a newer release.
+REVISION = "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4"
 
 
 def _per_dataset_bacc(df):
@@ -36,7 +39,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
     num_shards = getattr(args, "num_shards", 1)
 
     print(f"\n  Loading {HF_DATASET} [{SPLIT}]")
-    df = pd.DataFrame(load_dataset(HF_DATASET, split=SPLIT))
+    df = pd.DataFrame(load_dataset(HF_DATASET, split=SPLIT, revision=REVISION))
     print(f"  {len(df)} samples total")
     if num_shards > 1:
         df = df.iloc[shard_index::num_shards].reset_index(drop=True)
