@@ -58,7 +58,7 @@ _JUDGE_NOTHINK = (
 )
 
 _SCORING_SCHEMA = (
-    "If the last assistant's text meets the criteria, return 'yes'; otherwise, return 'no'."
+    "If the last user's/assistant's text meets the criteria, return 'yes'; otherwise, return 'no'."
 )
 
 
