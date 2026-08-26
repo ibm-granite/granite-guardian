@@ -57,8 +57,13 @@ _JUDGE_NOTHINK = (
     "Output empty <think>\\n</think> tags followed by your score in <score></score> tags."
 )
 
+# three different schemas for different use cases
+prompt_response_schema = "If the last assistant's text meets the criteria, return 'yes'; otherwise, return 'no'."
+prompt_response_instruction_following_schema = "If the assistant's generation satisfies the requirements, return 'yes'; otherwise, return 'no'."
+prompt_only_schema = "If the last user's text meets the criteria, return 'yes'; otherwise, return 'no'."
+
 _SCORING_SCHEMA = (
-    "If the last user's/assistant's text meets the criteria, return 'yes'; otherwise, return 'no'."
+    prompt_response_schema
 )
 
 
