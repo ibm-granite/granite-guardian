@@ -2,6 +2,7 @@
 
 import json
 import math
+import re
 
 from benchmarks._common import resolve_col, USER_COLS, ASST_COLS, CTX_COLS
 
@@ -39,6 +40,31 @@ def softmax_safe_unsafe(logprobs):
             elif tok == "unsafe":
                 unsafe_prob += math.exp(lp.logprob)
     return unsafe_prob / (safe_prob + unsafe_prob)
+
+
+def parse_json_score(output, nlogprobs):
+    """Parse a ``{"score": "yes"/"no"}`` verdict → (label 1/0, P(yes)).
+
+    Used by the Granite Libraries adapters. Only a well-formed JSON object with a
+    yes/no ``score`` yields a label; anything else is a parse failure (None).
+    """
+    text = output.outputs[0].text.strip()
+    label = None
+    match = re.search(r"\{.*?\}", text, re.DOTALL)
+    if match:
+        try:
+            score = json.loads(match.group(0)).get("score")
+        except (json.JSONDecodeError, AttributeError):
+            score = None
+        if isinstance(score, str) and score.strip().lower() in ("yes", "no"):
+            label = 1 if score.strip().lower() == "yes" else 0
+
+    prob = None
+    if nlogprobs > 0:
+        logprobs = getattr(output.outputs[0], "logprobs", None)
+        if logprobs:
+            prob = softmax_yes_no(logprobs)
+    return label, prob
 
 
 def build_messages(sample, ds_config):

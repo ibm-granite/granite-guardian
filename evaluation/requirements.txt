@@ -3,6 +3,10 @@ vllm>=0.15.1
 torch
 transformers>=4.52
 
+# aLoRA adapters (vLLM has no aLoRA support; native aLoRA landed in peft 0.18)
+peft>=0.18.1
+accelerate
+
 # Data + metrics
 datasets>=3.0
 scikit-learn

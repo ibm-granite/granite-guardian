@@ -2,11 +2,16 @@
 
 Reproduce the benchmark numbers reported on the
 [Granite Guardian](https://huggingface.co/collections/ibm-granite/granite-guardian)
-model cards, for the whole family (3.0 → 4.1). The framework loads a Guardian
-model with [vLLM](https://github.com/vllm-project/vllm), runs one or more
-benchmarks, and writes per-dataset metrics plus an aggregate.
+model cards, for the whole family (3.0 → 4.1), and on the
+[Granite Libraries](https://huggingface.co/collections/ibm-granite/granite-libraries)
+cards for the Guardian Core and Requirement Check LoRA / aLoRA adapters. The
+framework loads a model with [vLLM](https://github.com/vllm-project/vllm)
+(aLoRA adapters with Hugging Face PEFT), runs one or more benchmarks, and writes
+per-dataset metrics plus an aggregate.
 
-It covers four benchmarks:
+It covers seven benchmarks. The first four are **guardian** benchmarks (risk
+detection); the last three are **requirement-checking** benchmarks (does a
+response satisfy given requirements?):
 
 | Benchmark | What it measures | Metric | Data |
 |---|---|---|---|
@@ -14,10 +19,14 @@ It covers four benchmarks:
 | `groundedness_true` | RAG hallucination on the [TRUE](https://github.com/google-research/true) benchmark (9 datasets) | AUC / BAcc | requires setup |
 | `groundedness_aggrefact` | RAG hallucination on [LM-AggreFact](https://huggingface.co/datasets/lytang/LLM-AggreFact) | balanced accuracy | turnkey (HF) |
 | `function_calling` | Function-call hallucination on [FC-Reward-Bench](https://huggingface.co/datasets/ibm-research/fc-reward-bench) | balanced accuracy | turnkey (HF) |
+| `ifeval_multiconstraint` | Multi-constraint instruction following (IFEval-style, held-out set) | balanced accuracy | requires setup |
+| `infobench_gpt4` | [InfoBench](https://arxiv.org/abs/2401.03601) decomposed requirements, GPT-4 labels | balanced accuracy | requires setup |
+| `infobench_human` | InfoBench decomposed requirements, expert labels | balanced accuracy | requires setup |
 
 "Turnkey" benchmarks download their data from the Hugging Face Hub and need no
-setup. The other two are evaluated on curated subsets of public datasets that we
-do not redistribute; see [`data/README.md`](data/README.md) to assemble them.
+setup. The others are evaluated on curated subsets of public datasets, or on
+annotation files distributed outside the Hub, that we do not redistribute; see
+[`data/README.md`](data/README.md) to assemble them.
 
 ## Install
 
@@ -26,7 +35,7 @@ pip install -r requirements.txt
 ```
 
 Requires a CUDA GPU (vLLM). An 8B model fits on a single 80 GB GPU; the 2B/5B
-variants need less.
+variants need less. We ran the 30B adapters on two 80 GB GPUs (`--ngpus 2`).
 
 ## Quickstart
 
@@ -58,8 +67,8 @@ python run_eval.py --model-path ibm-granite/granite-guardian-4.1-8b
 
 ## Models
 
-Eight released models map onto three prompt APIs, each handled by one module in
-`models/`. The `--model-type` is auto-inferred from the path; pass it explicitly
+Eight released Guardian models map onto three prompt APIs, each handled by one
+module in `models/`; the Granite Libraries adapters add two more (see below). The `--model-type` is auto-inferred from the path; pass it explicitly
 to override.
 
 | Model | HF id | `--model-type` |
@@ -81,6 +90,35 @@ The three modules differ only in how the criterion and inputs are encoded:
   `<score>yes/no</score>`; supports `--think`.
 - **`granite-guardian-4.1`**: explicit `<guardian>` block,
   `<think>...</think><score>yes/no</score>`; supports `--think`.
+
+### Granite Libraries adapters (LoRA / aLoRA)
+
+The [Guardian Core](https://huggingface.co/ibm-granite/granitelib-guardian-r1.0/tree/main/guardian-core)
+and [Requirement Check](https://huggingface.co/ibm-granite/granitelib-core-r1.0/tree/main/requirement-check)
+adapters bring Guardian judging to the Granite 4.1 base models
+(`ibm-granite/granite-4.1-{3b,8b,30b}`). Pass the adapter as `--model-path`,
+either as `<hf-repo>/<subfolder>` (downloaded on first use) or as a local
+directory holding `adapter_config.json`. The base model and adapter type are
+read from `adapter_config.json`:
+
+| Adapter | `--model-path` | `--model-type` | Benchmarks |
+|---|---|---|---|
+| Guardian Core | `ibm-granite/granitelib-guardian-r1.0/guardian-core/granite-4.1-<size>/<lora\|alora>` | `guardian-core` | `ood_safety`, `groundedness_aggrefact`, `function_calling` (any guardian benchmark) |
+| Requirement Check | `ibm-granite/granitelib-core-r1.0/requirement-check/granite-4.1-<size>/<lora\|alora>` | `requirement-check` | `ifeval_multiconstraint`, `infobench_gpt4`, `infobench_human` |
+
+- **`guardian-core`**: `<guardian>` judge block as the final user turn,
+  `documents=`/`available_tools=`, `{"score": "yes"/"no"}` (yes = risk).
+- **`requirement-check`**: a final `<requirements> ...` user turn,
+  `{"score": "yes"/"no"}` (yes = requirements satisfied).
+
+**LoRA** adapters run on vLLM (`LoRARequest`). **aLoRA** adapters run on Hugging
+Face transformers + PEFT, because vLLM does not support aLoRA. The backend is
+picked automatically. The HF path batches by padded length (`--hf-batch-tokens`,
+default 32768; lower it if a long-context benchmark runs out of memory) and
+returns the same step log-probabilities as vLLM, so AUC is reported for both.
+Neither adapter family has a think mode, and generation is capped at 20 tokens
+(the verdict is ~6). With no `--benchmarks`, a run covers every benchmark the
+model type supports.
 
 ## Reproducing the card benchmarks
 
@@ -117,12 +155,65 @@ python run_eval.py \
 > MiniCheck to <1 point on 10 of 11 datasets. The 4.1 LM-AggreFact card number is
 > reproduced exactly by this path.
 
+### Granite Libraries adapters
+
+Each command runs every benchmark its model type supports (Guardian Core: harm,
+LM-AggreFact, FC-Reward-Bench; Requirement Check: IFEval and both InfoBench
+splits). Swap the size (`3b`, `8b`, `30b`) and type (`lora`, `alora`) in the
+path for the other adapters:
+
+```bash
+export GG_EVALS_DATA_ROOT=/path/to/your/eval_data
+
+# Guardian Core
+python run_eval.py \
+    --model-path ibm-granite/granitelib-guardian-r1.0/guardian-core/granite-4.1-8b/lora \
+    --benchmarks ood_safety groundedness_aggrefact function_calling
+
+# Requirement Check
+python run_eval.py \
+    --model-path ibm-granite/granitelib-core-r1.0/requirement-check/granite-4.1-8b/alora
+```
+
+Reproduced on all six 4.1 adapters of each family (H100, vLLM 0.31, PEFT 0.21):
+
+**Guardian Core** (reproduced / card): harm F1, LM-AggreFact mean per-dataset BAcc, FC-Reward-Bench BAcc.
+
+| Adapter | `ood_safety` F1 | `groundedness_aggrefact` BAcc | `function_calling` BAcc |
+|---|---|---|---|
+| 4.1-3B LoRA | 0.77 / 0.77 | 0.720 / 0.721 | 0.73 / 0.73 |
+| 4.1-3B aLoRA | 0.78 / 0.78 | 0.744 / 0.745 | 0.75 / 0.75 |
+| 4.1-8B LoRA | 0.79 / 0.79 | 0.727 / 0.728 | 0.78 / 0.78 |
+| 4.1-8B aLoRA | 0.80 / 0.80 | 0.740 / 0.741 | 0.76 / 0.76 |
+| 4.1-30B LoRA | 0.80 / 0.80 | 0.750 / 0.750 | 0.78 / 0.79 |
+| 4.1-30B aLoRA | 0.81 / 0.81 | 0.757 / 0.757 | 0.79 / 0.78 |
+
+**Requirement Check** (reproduced / card), balanced accuracy:
+
+| Adapter | `ifeval_multiconstraint` | `infobench_gpt4` | `infobench_human` |
+|---|---|---|---|
+| 4.1-3B LoRA | 0.8147 / 0.8153 | 0.6970 / 0.6960 | 0.6808 / 0.6728 |
+| 4.1-3B aLoRA | 0.8445 / 0.8425 | 0.7164 / 0.7150 | 0.6407 / 0.6475 |
+| 4.1-8B LoRA | 0.8373 / 0.8360 | 0.7368 / 0.7373 | 0.6540 / 0.6546 |
+| 4.1-8B aLoRA | 0.8514 / 0.8554 | 0.7124 / 0.7119 | 0.6794 / 0.6761 |
+| 4.1-30B LoRA | 0.8420 / 0.8406 | 0.7500 / 0.7512 | 0.7048 / 0.7038 |
+| 4.1-30B aLoRA | 0.8498 / 0.8492 | 0.7431 / 0.7432 | 0.7023 / 0.7052 |
+
+Guardian Core matches the card to within one unit in its last reported digit
+(per dataset, harm F1 and LM-AggreFact BAcc stay within ±0.01). Requirement Check
+matches to within ±0.008 BAcc; the largest gaps are on the small
+`infobench_human` set (~230 rows per answering model). LoRA results come from
+vLLM and aLoRA results from the HF + PEFT path; both reproduce their card rows.
+
 ## How scoring works
 
 Each row becomes a Guardian prompt whose output gives a **label** (`1` = risk,
 `0` = safe) and a **probability of risk** (softmax over the `Yes`/`No` token
 log-probabilities, as in the Granite Guardian cookbooks). F1 and balanced
 accuracy use the label; AUC uses the probability.
+
+The requirement-checking benchmarks flip the polarity: `1` = the response
+satisfies the requirement(s), and the probability is P(`yes`) = P(satisfied).
 
 Two benchmarks preprocess: TRUE splits long documents into sentence chunks and
 aggregates per-claim scores to a per-document verdict; FC-Reward-Bench expands
@@ -199,12 +290,14 @@ run.SUPPORTS_SHARDING = True               # optional: enables --num-shards
 ```
 
 Add it to `BENCHMARKS` in `benchmarks/__init__.py` and it becomes a valid
-`--benchmarks` choice. `benchmarks/_common.py` has the shared helpers
+`--benchmarks` choice. Set `run.TASK = "requirement_check"` for a benchmark that
+judges responses against requirements; it then runs only on model types whose
+module sets the same `TASK` (e.g. `requirement-check`). `benchmarks/_common.py` has the shared helpers
 (`format_all`, `generate_and_parse`, `compute_metrics`, `save_aggregate`).
 
 ### Bring your own dataset
 
-The two turnkey benchmarks load from the Hugging Face Hub; the other two read
+The two turnkey benchmarks load from the Hugging Face Hub; the others read
 locally-prepared datasets from `GG_EVALS_DATA_ROOT`. To add your own data, save
 it in the Arrow format the loader expects and point the env var at it. See
 [`data/README.md`](data/README.md) for the directory layout, per-example schema,

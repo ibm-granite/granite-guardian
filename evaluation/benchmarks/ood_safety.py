@@ -54,7 +54,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
         metrics = compute_metrics(
             pd.Series(df["pred_labels"]), pd.Series(df["true_labels"]),
             pd.Series(df["positive_label_probability"]) if probs[0] is not None else None)
-        metrics.update(model_name=args.base_model, dataset=ds_name, benchmark="ood_safety")
+        metrics.update(model_name=args.model_path, dataset=ds_name, benchmark="ood_safety")
         print(f"  F1={metrics['f1 Score']:.4f}  BAcc={metrics['balanced_accuracy']:.4f}")
 
         save_metrics(metrics, out_base, ds_name)
@@ -65,6 +65,6 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
 
     if all_metrics and num_shards == 1:
         save_aggregate(all_metrics, out_base,
-                       f"{'think' if args.think else 'no_think'}_{args.base_model}", "ood_safety")
+                       f"{'think' if args.think else 'no_think'}_{args.model_path}", "ood_safety")
 
 run.SUPPORTS_SHARDING = True

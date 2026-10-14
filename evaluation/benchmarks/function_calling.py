@@ -62,7 +62,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
     metrics = compute_metrics(
         pd.Series(df["pred_labels"]), pd.Series(df["true_labels"]),
         pd.Series(df["positive_label_probability"]) if probs[0] is not None else None)
-    metrics.update(model_name=args.base_model, dataset="fc_reward_bench", benchmark="function_calling")
+    metrics.update(model_name=args.model_path, dataset="fc_reward_bench", benchmark="function_calling")
     print(f"  F1={metrics['f1 Score']:.4f}  BAcc={metrics['balanced_accuracy']:.4f}")
 
     save_metrics(metrics, out_base, "fc_reward_bench")
@@ -71,4 +71,4 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
         df.to_json(f"{out_base}/predictions_fc_reward_bench.jsonl", orient="records", lines=True)
 
     save_aggregate([metrics], out_base,
-                   f"{'think' if args.think else 'no_think'}_{args.base_model}", "function_calling")
+                   f"{'think' if args.think else 'no_think'}_{args.model_path}", "function_calling")

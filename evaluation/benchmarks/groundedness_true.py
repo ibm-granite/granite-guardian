@@ -161,7 +161,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
         metrics = compute_metrics(
             pd.Series(cons["preds"]), pd.Series(cons["label"]),
             pd.Series(cons["y_probs"]), num_failed)
-        metrics.update(model_name=args.base_model, dataset=ds_name, benchmark="groundedness_true")
+        metrics.update(model_name=args.model_path, dataset=ds_name, benchmark="groundedness_true")
         print(f"  AUC={metrics['auc']}  BAcc={metrics['balanced_accuracy']:.4f}")
 
         save_metrics(metrics, out_base, ds_name)
@@ -169,4 +169,4 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
 
     if all_metrics:
         save_aggregate(all_metrics, out_base,
-                       f"{'think' if args.think else 'no_think'}_{args.base_model}", "groundedness_true")
+                       f"{'think' if args.think else 'no_think'}_{args.model_path}", "groundedness_true")
