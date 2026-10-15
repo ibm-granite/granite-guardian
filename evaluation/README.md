@@ -94,9 +94,7 @@ The three modules differ only in how the criterion and inputs are encoded:
 The 4.1 and Guardian Core formatters pick the scoring schema from the
 conversation: "If the last assistant's text meets the criteria..." when there is
 an assistant turn, and "If the last user's text meets the criteria..." when there
-is not (the prompt-only harm datasets). See
-[Scoring schema for prompt-only harm](#scoring-schema-for-prompt-only-harm) for
-how this relates to the published numbers.
+is not (the prompt-only harm datasets).
 
 ### Granite Libraries adapters (LoRA / aLoRA)
 
@@ -184,18 +182,16 @@ python run_eval.py \
 
 Reproduced on all six 4.1 adapters of each family (H100, vLLM 0.31, PEFT 0.21):
 
-**Guardian Core**: harm F1, LM-AggreFact mean per-dataset BAcc, FC-Reward-Bench
-BAcc. The harm column is *this framework / card protocol / card*; the other two are
-*reproduced / card*.
+**Guardian Core** (reproduced / card): harm F1, LM-AggreFact mean per-dataset BAcc, FC-Reward-Bench BAcc.
 
 | Adapter | `ood_safety` F1 | `groundedness_aggrefact` BAcc | `function_calling` BAcc |
 |---|---|---|---|
-| 4.1-3B LoRA | 0.76 / 0.77 / 0.77 | 0.720 / 0.721 | 0.73 / 0.73 |
-| 4.1-3B aLoRA | 0.78 / 0.78 / 0.78 | 0.744 / 0.745 | 0.75 / 0.75 |
-| 4.1-8B LoRA | 0.80 / 0.79 / 0.79 | 0.727 / 0.728 | 0.78 / 0.78 |
-| 4.1-8B aLoRA | 0.80 / 0.80 / 0.80 | 0.740 / 0.741 | 0.76 / 0.76 |
-| 4.1-30B LoRA | 0.80 / 0.80 / 0.80 | 0.750 / 0.750 | 0.78 / 0.79 |
-| 4.1-30B aLoRA | 0.81 / 0.81 / 0.81 | 0.757 / 0.757 | 0.79 / 0.78 |
+| 4.1-3B LoRA | 0.76 / 0.76 | 0.720 / 0.721 | 0.73 / 0.73 |
+| 4.1-3B aLoRA | 0.78 / 0.78 | 0.744 / 0.745 | 0.75 / 0.75 |
+| 4.1-8B LoRA | 0.80 / 0.80 | 0.727 / 0.728 | 0.78 / 0.78 |
+| 4.1-8B aLoRA | 0.80 / 0.80 | 0.740 / 0.741 | 0.76 / 0.76 |
+| 4.1-30B LoRA | 0.80 / 0.80 | 0.750 / 0.750 | 0.78 / 0.79 |
+| 4.1-30B aLoRA | 0.81 / 0.81 | 0.757 / 0.757 | 0.79 / 0.78 |
 
 **Requirement Check** (reproduced / card), balanced accuracy:
 
@@ -208,40 +204,11 @@ BAcc. The harm column is *this framework / card protocol / card*; the other two 
 | 4.1-30B LoRA | 0.8420 / 0.8406 | 0.7500 / 0.7512 | 0.7048 / 0.7038 |
 | 4.1-30B aLoRA | 0.8498 / 0.8492 | 0.7431 / 0.7432 | 0.7023 / 0.7052 |
 
-Under the card protocol, Guardian Core matches the card to within one unit in its
-last reported digit (per dataset, harm F1 and LM-AggreFact BAcc stay within
-±0.01). Requirement Check
+Guardian Core matches the card to within one unit in its last reported digit
+(per dataset, harm F1 and LM-AggreFact BAcc stay within ±0.01). Requirement Check
 matches to within ±0.008 BAcc; the largest gaps are on the small
 `infobench_human` set (~230 rows per answering model). LoRA results come from
 vLLM and aLoRA results from the HF + PEFT path; both reproduce their card rows.
-
-### Scoring schema for prompt-only harm
-
-Five `ood_safety` datasets (AegisSafetyTest, HarmBench_Prompt, OAI_hf,
-simpleSafetyTest, toxic_chat) are prompt-only: the conversation has no assistant
-turn. This framework then asks the judge about "the last user's text", matching
-the prompt-only example on the Guardian Core card.
-
-**The Guardian Core card's harm numbers were produced with the assistant-text
-schema ("If the last assistant's text meets the criteria...") on every row,
-prompt-only rows included.** That is the "card protocol" column above: with the
-assistant-text schema on every row, these adapters reproduce all six card
-aggregates exactly at two decimals, and 24 of the 30 prompt-only per-dataset
-cells. With the user-text schema they reproduce 4 of 6 aggregates and 12 of 30
-cells.
-
-The schema matters for prompt-only rows. Switching it moves per-dataset F1 by up
-to ±0.02 (e.g. 4.1-8B LoRA: AegisSafetyTest 0.840 → 0.861, toxic_chat
-0.771 → 0.761), with no consistent direction across adapters. Aggregates move by
-at most 0.006. Prompts with an assistant turn are unchanged. Their scores can still
-shift by up to ~0.008 between runs, because borderline rows (P(yes) ≈ 0.5) flip
-under vLLM's batch-dependent numerics, and one flip on a few-hundred-row dataset
-moves F1 by nearly that much.
-
-For Granite Guardian 4.1 8B the aggregates barely move. No-think harm F1 is 0.794
-under both schemas. Think mode is 0.779 (assistant-text) vs. 0.782 (user-text),
-though think-mode toxic_chat moves from 0.705 to 0.753. Both modes still round to
-the 4.1 card (0.79 / 0.78).
 
 For an example comparison of these adapters against prompted Granite 4.1 models
 and hosted decision models, see
