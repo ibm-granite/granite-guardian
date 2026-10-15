@@ -205,6 +205,10 @@ matches to within ±0.008 BAcc; the largest gaps are on the small
 `infobench_human` set (~230 rows per answering model). LoRA results come from
 vLLM and aLoRA results from the HF + PEFT path; both reproduce their card rows.
 
+For an example comparison of these adapters against prompted Granite 4.1 models
+and hosted decision models, see
+[`result_files/decision-models-comparison.md`](result_files/decision-models-comparison.md).
+
 ## How scoring works
 
 Each row becomes a Guardian prompt whose output gives a **label** (`1` = risk,
