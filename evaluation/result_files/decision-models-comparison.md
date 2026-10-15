@@ -11,6 +11,11 @@ The adapter rows are reproduced by this framework; see
 [Reproducing the card benchmarks](../README.md#granite-libraries-adapters).
 The decision models are not covered by the framework.
 
+The OOD Safety numbers follow the card protocol, which uses the assistant-text
+scoring schema on every row, prompt-only datasets included. This framework uses
+the user-text schema for prompt-only rows; see
+[Scoring schema for prompt-only harm](../README.md#scoring-schema-for-prompt-only-harm).
+
 "Best prompted Granite-4.1" is the best of the 3B / 8B / 30B base models prompted
 with the same task, and "Best trained adapter" is the best of the 4.1 LoRA / aLoRA
 adapters, each taken per benchmark.
