@@ -1,15 +1,22 @@
 """Granite Guardian evaluation CLI.
 
 Reproduces the benchmark numbers reported on the Granite Guardian model cards
-(3.0 through 4.1). Loads a model with vLLM, runs one or more benchmarks, and
-writes per-dataset metrics plus an aggregate to the output directory.
+(3.0 through 4.1) and on the Granite Libraries Guardian Core / Requirement
+Check adapter cards. Loads a model with vLLM (aLoRA adapters with HF + PEFT),
+runs one or more benchmarks, and writes per-dataset metrics plus an aggregate
+to the output directory.
 
 Example:
   python run_eval.py --model-path ibm-granite/granite-guardian-4.1-8b \\
     --benchmarks groundedness_aggrefact function_calling
 
+  python run_eval.py \\
+    --model-path ibm-granite/granitelib-guardian-r1.0/guardian-core/granite-4.1-8b/lora
+
 The model type (prompt template + output parser) is inferred from the model
-path; override with --model-type if needed.
+path; override with --model-type if needed. An adapter path (a directory with
+adapter_config.json, or <hf-repo>/<subfolder>) loads its base model from
+adapter_config.json.
 """
 
 import argparse
@@ -22,7 +29,8 @@ import sys
 
 from transformers import set_seed
 
-from models import MODELS
+from adapters import load_adapter_model, read_adapter_config, resolve_adapter
+from models import MODELS, MODEL_MODULES
 from benchmarks import BENCHMARKS, ALL_BENCHMARK_NAMES
 
 
@@ -31,6 +39,10 @@ from benchmarks import BENCHMARKS, ALL_BENCHMARK_NAMES
 def infer_model_type(model_path):
     """Infer the model-type key from a model path/HF id (override with --model-type)."""
     p = model_path.lower()
+    if "guardian-core" in p:
+        return "guardian-core"
+    if "requirement-check" in p:
+        return "requirement-check"
     if "guardian-3.3" in p or "guardian_3.3" in p:
         return "granite-guardian-3.3"
     if "guardian-4.1" in p or "guardian_4.1" in p:
@@ -41,15 +53,15 @@ def infer_model_type(model_path):
     return None
 
 
-def _resolve_path(path):
-    """Local dir → as-is; otherwise pass through (vLLM/HF downloads by id)."""
-    return path
-
-
-# --- model loading (vLLM) ---------------------------------------------------
+# --- model loading ----------------------------------------------------------
 
 def load_model(args):
-    """Load a full model with vLLM. Returns (llm, tokenizer, sampling_params)."""
+    """Load the model. Returns (llm, tokenizer, sampling_params).
+
+    Full models load with vLLM here; adapters go through adapters.py.
+    """
+    if args.adapter_path:
+        return load_adapter_model(args)
     from vllm import LLM, SamplingParams
 
     print(f"Loading model: {args.base_model}")
@@ -170,6 +182,7 @@ def _run_sharded_benchmark(bench_name, num_shards, args, out_dir, model_id):
                 "--max-tokens", str(args.max_tokens),
                 "--repetition-penalty", str(args.repetition_penalty),
                 "--nlogprobs", str(args.nlogprobs),
+                "--hf-batch-tokens", str(args.hf_batch_tokens),
                 "--out-dir", args.out_dir,
                 "--seed", str(args.seed)]
     if args.max_model_len:
@@ -220,16 +233,18 @@ def _run_sharded_benchmark(bench_name, num_shards, args, out_dir, model_id):
 def main():
     p = argparse.ArgumentParser(description="Granite Guardian evaluation")
     p.add_argument("--model-path", required=True,
-                   help="HF id or local path to the model weights")
+                   help="HF id or local path to the model weights, or an adapter "
+                        "(local dir or <hf-repo>/<subfolder>)")
     p.add_argument("--model-type", default=None, choices=list(MODELS.keys()),
                    help="Prompt template + parser. Inferred from --model-path if omitted.")
     p.add_argument("--think", action="store_true",
                    help="Enable think mode (3.3 / 4.1 only)")
     p.add_argument("--benchmarks", nargs="+", default=None, choices=ALL_BENCHMARK_NAMES,
-                   help="Benchmarks to run (default: all)")
+                   help="Benchmarks to run (default: all that the model type supports)")
     p.add_argument("--ngpus", type=int, default=1)
     p.add_argument("--batch-size", type=int, default=512)
-    p.add_argument("--max-tokens", type=int, default=4096)
+    p.add_argument("--max-tokens", type=int, default=None,
+                   help="Generation cap. Default: 4096, or 20 for the adapters.")
     p.add_argument("--repetition-penalty", type=float, default=1.0)
     p.add_argument("--nlogprobs", type=int, default=20)
     p.add_argument("--max-model-len", type=int, default=None,
@@ -241,6 +256,8 @@ def main():
                    help="Data-parallel shards (1 GPU each) for shardable benchmarks")
     p.add_argument("--keep-shards", action="store_true", help="Keep shard dirs after merging")
     p.add_argument("--shard-index", type=int, default=0, help=argparse.SUPPRESS)
+    p.add_argument("--hf-batch-tokens", type=int, default=32768,
+                   help="aLoRA (HF + PEFT) only: max padded tokens per generation batch")
     p.add_argument("--seed", type=int, default=42)
     args = p.parse_args()
 
@@ -253,11 +270,23 @@ def main():
                 f"e.g. --model-type granite-guardian-4.1. Available: {list(MODELS.keys())}")
         print(f"Inferred model type: {args.model_type}")
 
-    args.base_model = _resolve_path(args.model_path)
+    module = MODEL_MODULES[args.model_type]
+    if args.think and not getattr(module, "SUPPORTS_THINK", True):
+        sys.exit(f"--model-type {args.model_type} has no think mode; drop --think.")
+    if args.max_tokens is None:
+        args.max_tokens = getattr(module, "MAX_TOKENS", 4096)
+
+    # An adapter loads its base model from adapter_config.json.
+    args.adapter_path = resolve_adapter(args.model_path)
+    args.base_model = args.model_path
+    if args.adapter_path:
+        args.base_model, args.adapter_type, args.adapter_rank = read_adapter_config(args.adapter_path)
+        print(f"Adapter: {args.adapter_type} on {args.base_model} ({args.adapter_path})")
+
     set_seed(args.seed)
     model_fmt, model_parse = MODELS[args.model_type]
 
-    model_id = f"{args.model_type}_{args.base_model.replace('/', '_')}"
+    model_id = f"{args.model_type}_{args.model_path.replace('/', '_')}"
     think_str = "think" if args.think else "no_think"
 
     # Lazy model loading - benchmarks that don't need the model (e.g. shard
@@ -269,7 +298,14 @@ def main():
             state["llm"], state["tokenizer"], state["sp"] = load_model(args)
         return state["llm"], state["tokenizer"], state["sp"]
 
-    bench_names = args.benchmarks or list(BENCHMARKS.keys())
+    # Guardian benchmarks and requirement-checking benchmarks need different models.
+    task = getattr(module, "TASK", "guardian")
+    compatible = [b for b in BENCHMARKS if getattr(BENCHMARKS[b], "TASK", "guardian") == task]
+    bench_names = args.benchmarks or compatible
+    incompatible = [b for b in bench_names if b not in compatible]
+    if incompatible:
+        sys.exit(f"--model-type {args.model_type} cannot run {incompatible}; "
+                 f"its benchmarks are {compatible}.")
     is_orchestrator = args.num_shards > 1 and "--shard-index" not in sys.argv
 
     if is_orchestrator:

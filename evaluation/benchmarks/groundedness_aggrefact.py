@@ -78,7 +78,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
         if row["Dataset"] == "Average":
             continue
         with open(os.path.join(out_base, f"results_{row['Dataset']}.json"), "w") as f:
-            json.dump({"model_name": args.base_model, "dataset": row["Dataset"],
+            json.dump({"model_name": args.model_path, "dataset": row["Dataset"],
                        "benchmark": "groundedness_aggrefact",
                        "balanced_accuracy": row["BAcc"] / 100}, f, indent=4)
 
@@ -86,7 +86,7 @@ def run(bench_cfg, ensure_model, args, guard_fmt, guard_parse, out_base):
     avg_per_ds = bacc_table[bacc_table["Dataset"] == "Average"]["BAcc"].values[0] / 100
     print(f"\n  Overall BAcc={overall:.4f}  Avg per-dataset={avg_per_ds:.3f}")
 
-    agg = {"model_name": args.base_model, "benchmark": "groundedness_aggrefact",
+    agg = {"model_name": args.model_path, "benchmark": "groundedness_aggrefact",
            "balanced_accuracy": overall, "avg_bacc_per_dataset": avg_per_ds, "Failed": 0}
     with open(os.path.join(out_base, "Aggregate.json"), "w") as f:
         json.dump(agg, f, indent=4)

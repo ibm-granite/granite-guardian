@@ -7,6 +7,12 @@ Each model module must export:
 The registry key is the module's ``MODEL_NAME`` (with underscores replaced by
 dashes), e.g. ``granite-guardian-3``. To add a new model family (or a baseline
 guardrail model), drop a new module here that exports the two functions above.
+
+Optional module attributes (read through ``MODEL_MODULES``):
+  TASK            "guardian" (default) or "requirement_check" - which
+                  benchmarks the model can run
+  SUPPORTS_THINK  default True; False rejects --think
+  MAX_TOKENS      default generation cap when --max-tokens is not given
 """
 
 import importlib
@@ -16,6 +22,7 @@ import pkgutil
 logger = logging.getLogger(__name__)
 
 MODELS = {}  # key -> (format_fn, parse_fn)
+MODEL_MODULES = {}  # key -> module
 
 for _, name, _ in pkgutil.iter_modules(__path__):
     if name.startswith("_"):
@@ -28,3 +35,4 @@ for _, name, _ in pkgutil.iter_modules(__path__):
     if hasattr(mod, "format_fn") and hasattr(mod, "parse_fn"):
         key = getattr(mod, "MODEL_NAME", name).replace("_", "-")
         MODELS[key] = (mod.format_fn, mod.parse_fn)
+        MODEL_MODULES[key] = mod
